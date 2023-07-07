@@ -18,3 +18,4 @@
 
 * 8:45: map project research outline and to-dos
 * 9:00: practice TS with exercism
+* 9:30: read TS docs
