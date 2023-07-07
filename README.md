@@ -17,3 +17,4 @@
 #### Friday 07/07
 
 * 8:45: map project research outline and to-dos
+* 9:00: practice TS with exercism
