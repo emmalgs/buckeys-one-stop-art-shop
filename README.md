@@ -1,3 +1,6 @@
+### Sample Main Page (Figma)
+![figma sketch of main page](./src/assets/BuckeysOneStop.png)
+
 ### Research To-Dos
 * Read Typescript Docs
 * Study/practice basic algorithms in Typescript
