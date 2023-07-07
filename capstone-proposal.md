@@ -31,3 +31,33 @@ Buckey's One Stop Art Shop is a webpage that displays a piece of art for sale al
 * Email service for newsletter
 
 ### Notes
+
+UX/UI Research/Sample webpages:
+* [Gohar World](https://gohar.world/)
+  * Audio button
+  * splash page
+  * hover animation on images
+  * simple nav bar
+* [Utrecht Japan](https://utrecht.jp/)
+  * color consitency (red borders, text, buttons)
+  * sans serif font
+  * basic nav, bold text for nav clarity
+* [Laura Owens Artist Website](https://www.owenslaura.com/)
+  * simple side nav
+  * nostalgic graphics
+  * white space
+* [art collective](https://www.m-o-l-l-y.com/)
+  * interactive background
+  * donate links
+  * nostalgic
+  * absurdist
+  * chaotic
+* [Roaring 2020s artist page](https://roaring2020s.nl/)
+  * splash page has transparent/collage imagery
+  * handwritten text
+  * collection of layered imagery in the center
+  * splash page rearranges imagery/links on each load
+* [Crew](https://crevv.com/)
+  * bold simple hero image, logo and small animation
+  * straigh-forward nav at the top (not fixed)
+  * button/link styling simple border circle and underline all caps text

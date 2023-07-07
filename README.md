@@ -21,3 +21,4 @@
 * 9:30: read TS docs
 * 10:00: practice TS with exercism
 * 10:30: read TS docs
+* 11:00: Collect sample layouts/ideas
