@@ -8,3 +8,26 @@ Buckey's One Stop Art Shop is a webpage that displays a piece of art for sale al
 ### Project Purpose/Goal  
 * A homepage that displays an image of the piece, title, price, description, and artist.
 * The homepage displays a timer above the art piece
+* The homepage displays if the item is sold or not
+* A header and logo
+
+### Technologies
+* Create a database of art pieces using **C# and Azure to host the API** _or_ **NoSQL with React**
+* **Node.js with Vite** for the bundler
+* Testing with be done with **Vitest**
+* UX and UI are built with **React** and **Custom CSS**
+* Frontend is coded in **Typescript**
+
+### Additional Features
+* A gallery of past items that have come up for sale/sold
+* A way to actually purchase the piece for sale
+* User authentication and/or checkout with PayPal or Stripe
+* Newsletter subscription for emails when new art piece is up
+* A merch section
+
+### Additional Technologies
+* OAuth
+* Email database for newsletter
+* Email service for newsletter
+
+### Notes
