@@ -23,3 +23,4 @@
 * 10:30: read TS docs
 * 11:00: Collect sample layouts/ideas
 * 11:30-12: Page layout sketches
+* 1 - 2pm: drew some ideas
