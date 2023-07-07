@@ -1,5 +1,6 @@
 import React from 'react';
 import Cart from './Cart';
+import Header from './Header'
 
 interface artControllerProps {
   cartVisible: boolean;
@@ -28,6 +29,7 @@ class ArtController extends React.Component<artControllerProps, artControllerSta
     }
     return (
       <div>
+        <Header cartView={this.handleBuyClick} />
         {currentlyVisible}
       </div>
     )

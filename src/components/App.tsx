@@ -1,9 +1,9 @@
-import Header from './Header'
+import ArtController from './ArtController'
 
 function App() {
   return (
     <>
-      <Header />
+      <ArtController />
     </>
   )
 }
