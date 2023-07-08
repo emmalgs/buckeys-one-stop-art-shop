@@ -1,6 +1,7 @@
-import React from 'react';
+import Art from './Art';
 import Cart from './Cart';
 import Header from './Header'
+import React from 'react';
 
 interface artControllerProps {
   cartVisible: boolean;
@@ -28,6 +29,8 @@ class ArtController extends React.Component<artControllerProps, artControllerSta
     let currentlyVisible = null;
     if (this.state.cartVisible) {
       currentlyVisible = <Cart />
+    } else {
+      currentlyVisible = <Art />
     }
     return (
       <div>
