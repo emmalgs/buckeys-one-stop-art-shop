@@ -1,8 +1,8 @@
 ### React Components Diagram
-![diagram of react components](./src/assets/buckeyscomponent.png)
+![diagram of react components](./src/assets/img/buckeyscomponent.png)
 
 ### Sample Main Page (Figma)
-![figma sketch of main page](./src/assets/figma_sketch.png)
+![figma sketch of main page](./src/assets/img/figma_sketch.png)
 
 ### Research To-Dos
 * Read Typescript Docs

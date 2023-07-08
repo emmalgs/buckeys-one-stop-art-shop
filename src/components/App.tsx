@@ -1,9 +1,11 @@
 import ArtController from './ArtController'
+import './../App.css'
 
 function App() {
+  const cartVisible = false;
   return (
     <>
-      <ArtController />
+      <ArtController cartVisible={cartVisible}/>
     </>
   )
 }

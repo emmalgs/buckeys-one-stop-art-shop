@@ -19,7 +19,9 @@ class ArtController extends React.Component<artControllerProps, artControllerSta
   }
 
   handleBuyClick = () => {
-    this.setState({ cartVisible: true })
+    this.setState(prevState => (
+      { cartVisible: !prevState.cartVisible })
+    )
   }
 
   render() {
