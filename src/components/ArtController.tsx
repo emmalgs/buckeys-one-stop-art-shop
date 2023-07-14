@@ -11,41 +11,22 @@ function ArtController() {
   const [homeVisible, setHomeVisible] = useState<boolean>(true);
   // const [countdown, setCountdown] = userState<number>(0);
   const [currentArt, setCurrentArt] = useState({});
-  const [artList, setArtList] = useState([]);
-
+  // const [artList, setArtList] = useState([]);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
-      collection(db, "art"),
+      query(collection(db, "art"), limit(1)),
       (collectionSnapshot) => {
-        const artworks = [];
-        collectionSnapshot.forEach((doc) => {
-          artworks.push({
-            ...doc.data()
-          });
-        });
-        setArtList(artworks);
+        const artwork = collectionSnapshot.docs[0].data();
+        setCurrentArt(artwork);
       },
       (error) => {
-        console.log(error)
+        console.log(error);
       }
     );
-
+  
     return () => unSubscribe();
   }, []);
-
-  console.log(artList)
-  // const q = query(
-  //   collection(db, "art"),
-  //   where("available", "==", "true"),
-  //   limit(1)
-  // );
-
-  // const querySnapshot = await getDocs(q);
-  // querySnapshot.forEach((doc) => {
-  //   setCurrentArt(doc.data())
-  // });
-
 
   const handleBuyClick = () => {
     setCartVisible(true);
