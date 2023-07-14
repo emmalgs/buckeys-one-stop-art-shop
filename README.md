@@ -13,9 +13,9 @@
 ### Project To-Dos
 * ~~Design page in Figma~~
 * ~~Map single page React app~~
-* Build out static page w/out info using React/TS
-  * add seed data to state
-  * hooks
+~~* Build out static page w/out info using React/TS~~
+  ~~* add seed data to state~~
+  ~~* hooks~~
 * ~~Basic CSS formatting for page~~
 * Build art db
 * Connect art db to frontend
@@ -34,7 +34,3 @@
 * 1 - 2pm: drew some ideas
 * 2:30: Draw first figma sketch
 * 3:00: Draw React component diagram
-
-#### Friday 07/14
-
-* 8:00: plan out day
