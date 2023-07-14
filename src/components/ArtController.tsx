@@ -2,7 +2,7 @@ import Art from "./Art";
 import Cart from "./Cart";
 import Header from "./Header";
 import { useState, useEffect } from "react";
-import { query, collection, where, limit, getDocs, onSnapshot } from "firebase/firestore";
+import { ref, onValue } from "firebase/database";
 import db from "./../firebase";
 
 function ArtController() {
@@ -10,7 +10,25 @@ function ArtController() {
   const [homeVisible, setHomeVisible] = useState<boolean>(true);
   const [allArt, setAllArt] = useState([]);
   const [currentArt, setCurrentArt] = useState({});
-  // const [countdown, setCountdown] = useState(4000);
+  // const [countdown, setCountdown] = useState(0);
+
+  useEffect(() => {
+    const artdb = ref(db, 'art/');
+    const unSubscribe = onValue(
+      artdb, (snapshot) => {
+      const artworks = [];
+      const data = snapshot.val();
+      Object.keys(data).forEach((art) => {
+        artworks.push(data[art]);
+      });
+      setAllArt(artworks)
+      setCurrentArt(allArt[0])
+    },
+    (error) => {
+      console.log(error);
+    });
+    return () => unSubscribe();
+  }, []);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -22,40 +40,40 @@ function ArtController() {
   //   };
   // }, []);
 
-  useEffect(() => {
-    const unSubscribe = onSnapshot(
-      query(collection(db, "art"), where("available", "==", true)),
-      (collectionSnapshot) => {
-        const artworks = [];
-        collectionSnapshot.forEach((doc) => {
-          artworks.push({
-            ...doc.data(),
-            id: doc.id
-          });
-        });
-        setAllArt(artworks);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  // useEffect(() => {
+  //   const unSubscribe = onSnapshot(
+  //     query(collection(db, "art"), where("available", "==", true)),
+  //     (collectionSnapshot) => {
+  //       const artworks = [];
+  //       collectionSnapshot.forEach((doc) => {
+  //         artworks.push({
+  //           ...doc.data(),
+  //           id: doc.id
+  //         });
+  //       });
+  //       setAllArt(artworks);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
   
-    return () => unSubscribe();
-  }, []);
+  //   return () => unSubscribe();
+  // }, []);
   
-  let currentIndex = 0;
-  const intervalDelay = 5000;
+  // let currentIndex = 0;
+  // const intervalDelay = 5000;
 
-  const timedArt = () => {
-    if (currentIndex < allArt.length) {
-        setCurrentArt(allArt[currentIndex])
-        currentIndex++
-    } else {
-      clearInterval(timer);
-    }
-  }
-
-  const timer = setInterval(timedArt, intervalDelay);
+  // const timedArt = () => {
+  //   if (currentIndex < allArt.length) {
+  //       setCurrentArt(allArt[currentIndex])
+  //       currentIndex++
+  //   } else {
+  //     clearInterval(timer);
+  //   }
+  // }
+// 
+  // const timer = setInterval(timedArt, intervalDelay);
 
   const handleBuyClick = () => {
     setCartVisible(true);
