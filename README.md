@@ -34,3 +34,8 @@
 * 1 - 2pm: drew some ideas
 * 2:30: Draw first figma sketch
 * 3:00: Draw React component diagram
+
+
+#### Friday 07/14
+
+* 3:00 Research Firebase realtime
