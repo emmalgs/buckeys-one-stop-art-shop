@@ -1,9 +1,11 @@
-import sample from './../assets/img/sample.png';
+interface ImageProps {
+  image: string;
+}
 
-function ArtImage() {
+function ArtImage(props: ImageProps) {
   return (
     <div className='art-image'>
-      <img src={sample} alt='artwork' />
+      <img src={props.image} alt='artwork' />
     </div>
   )
 }

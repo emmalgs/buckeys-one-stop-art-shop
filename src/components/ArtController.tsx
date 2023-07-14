@@ -41,7 +41,7 @@ function ArtController() {
   if (cartVisible) {
     currentlyVisible = <Cart />;
   } else if (homeVisible) {
-    currentlyVisible = <Art />;
+    currentlyVisible = <Art art={currentArt}/>;
   }
   return (
     <div>
