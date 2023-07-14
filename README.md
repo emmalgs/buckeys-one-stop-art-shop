@@ -5,16 +5,18 @@
 ![figma sketch of main page](./src/assets/img/figma_sketch.png)
 
 ### Research To-Dos
-* Read Typescript Docs
-* Study/practice basic algorithms in Typescript
-* Compare NoSQL with React to C# API, list pros and cons for project needs
-* Study/practice vite configs for project
+* ~~Read Typescript Docs~~
+* ~~Study/practice basic algorithms in Typescript~~
+* ~~Compare NoSQL with React to C# API, list pros and cons for project needs~~
+* ~~Study/practice vite configs for project~~
 
 ### Project To-Dos
-* Design page in Figma
-* Map single page React app
+* ~~Design page in Figma~~
+* ~~Map single page React app~~
 * Build out static page w/out info using React/TS
-* Basic CSS formatting for page
+  * add seed data to state
+  * hooks
+* ~~Basic CSS formatting for page~~
 * Build art db
 * Connect art db to frontend
 * Polish styling
@@ -32,3 +34,7 @@
 * 1 - 2pm: drew some ideas
 * 2:30: Draw first figma sketch
 * 3:00: Draw React component diagram
+
+#### Friday 07/14
+
+* 8:00: plan out day

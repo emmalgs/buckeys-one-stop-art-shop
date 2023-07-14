@@ -1,44 +1,33 @@
-import Art from './Art';
-import Cart from './Cart';
-import Header from './Header'
-import React from 'react';
+import Art from "./Art";
+import Cart from "./Cart";
+import Header from "./Header";
+import { useState } from "react";
 
-interface artControllerProps {
-  cartVisible: boolean;
-}
+function ArtController() {
+  const [cartVisible, setCartVisible] = useState(false);
+  const [homeVisible, setHomeVisible] = useState(true);
 
-interface artControllerState {
-  cartVisible: boolean
-}
-
-class ArtController extends React.Component<artControllerProps, artControllerState> {
-  constructor(props: artControllerProps){
-    super(props);
-    this.state = {
-      cartVisible: false,
-    }
+  const handleBuyClick = () => {
+    setCartVisible(true);
+    setHomeVisible(false);
   }
 
-  handleBuyClick = () => {
-    this.setState(prevState => (
-      { cartVisible: !prevState.cartVisible })
-    )
+  const handleHomeClick = () => {
+    setHomeVisible(true);
+    setCartVisible(false);
   }
-
-  render() {
-    let currentlyVisible = null;
-    if (this.state.cartVisible) {
-      currentlyVisible = <Cart />
-    } else {
-      currentlyVisible = <Art />
-    }
-    return (
-      <div>
-        <Header cartView={this.handleBuyClick} />
-        {currentlyVisible}
-      </div>
-    )
+  let currentlyVisible = null;
+  if (cartVisible) {
+    currentlyVisible = <Cart />;
+  } else if (homeVisible) {
+    currentlyVisible = <Art />;
   }
+  return (
+    <div>
+      <Header mainView={handleHomeClick} cartView={handleBuyClick} />
+      {currentlyVisible}
+    </div>
+  );
 }
 
 export default ArtController;
