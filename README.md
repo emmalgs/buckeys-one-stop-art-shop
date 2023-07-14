@@ -40,3 +40,4 @@
 
 * 3:00 Research Firebase realtime
 * 3:30 Research firebase realtime
+* 4:30 Seed smaple firebase realtime data
