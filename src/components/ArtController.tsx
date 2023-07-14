@@ -8,7 +8,9 @@ import db from "./../firebase";
 function ArtController() {
   const [cartVisible, setCartVisible] = useState<boolean>(false);
   const [homeVisible, setHomeVisible] = useState<boolean>(true);
+  const [allArt, setAllArt] = useState([]);
   const [currentArt, setCurrentArt] = useState({});
+  // const [countdown, setCountdown] = useState(4000);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -22,10 +24,16 @@ function ArtController() {
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
-      query(collection(db, "art"), where("available", "==", true), limit(1)),
+      query(collection(db, "art"), where("available", "==", true)),
       (collectionSnapshot) => {
-        const artwork = collectionSnapshot.docs[0].data();
-        setCurrentArt(artwork);
+        const artworks = [];
+        collectionSnapshot.forEach((doc) => {
+          artworks.push({
+            ...doc.data(),
+            id: doc.id
+          });
+        });
+        setAllArt(artworks);
       },
       (error) => {
         console.log(error);
@@ -35,7 +43,19 @@ function ArtController() {
     return () => unSubscribe();
   }, []);
   
+  let currentIndex = 0;
+  const intervalDelay = 5000;
 
+  const timedArt = () => {
+    if (currentIndex < allArt.length) {
+        setCurrentArt(allArt[currentIndex])
+        currentIndex++
+    } else {
+      clearInterval(timer);
+    }
+  }
+
+  const timer = setInterval(timedArt, intervalDelay);
 
   const handleBuyClick = () => {
     setCartVisible(true);
