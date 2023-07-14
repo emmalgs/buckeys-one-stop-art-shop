@@ -28,7 +28,7 @@ function ArtController() {
       console.log(error);
     });
     return () => unSubscribe();
-  }, []);
+  }, [allArt]);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
