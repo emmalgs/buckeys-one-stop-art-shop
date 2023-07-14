@@ -4,8 +4,9 @@ import Header from "./Header";
 import { useState } from "react";
 
 function ArtController() {
-  const [cartVisible, setCartVisible] = useState(false);
-  const [homeVisible, setHomeVisible] = useState(true);
+  const [cartVisible, setCartVisible] = useState<boolean>(false);
+  const [homeVisible, setHomeVisible] = useState<boolean>(true);
+  // const [countdown, setCountdown] = userState<number>(0);
 
   const handleBuyClick = () => {
     setCartVisible(true);
