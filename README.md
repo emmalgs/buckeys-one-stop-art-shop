@@ -39,3 +39,4 @@
 #### Friday 07/14
 
 * 3:00 Research Firebase realtime
+* 3:30 Research firebase realtime
