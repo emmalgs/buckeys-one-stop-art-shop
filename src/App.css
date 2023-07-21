@@ -75,3 +75,24 @@ button.buy {
 button.buy:hover {
   text-decoration: underline;
 }
+
+/* ADMIN */
+
+.queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 80%;
+  margin: auto;
+}
+
+.art-queue-item {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: pink;
+}
+
+.art-queue-item:hover {
+  background-color: lightcyan;
+  cursor: pointer;
+}
