@@ -1,6 +1,7 @@
 import React, { userState, useEffect, useState } from 'react';
 import { ref, onValue } from "firebase/database";
 import { db, auth } from "../../firebase";
+import AdminLogin from './AdminLogin';
 
 interface ArtObj {
   title: string;
@@ -32,4 +33,12 @@ function AdminControl() {
     });
     return () => unSubscribe();
   }, []);
+
+  return (
+    <div>
+      <AdminLogin />
+    </div>
+  )
 }
+
+export default AdminControl;
