@@ -9,7 +9,6 @@ interface ArtObj {
   description: string;
   price: string;
   imageUrl: string;
-  id: string;
 }
 
 let uploadedImg: File | null = null
@@ -19,7 +18,6 @@ function ArtQueueForm(props: FormProps) {
     if (event.target.files && event.target.files[0]) {
       uploadedImg = event.target.files[0];
     }
-    console.log(uploadedImg)
   }
 
   async function submitArt(e: React.FormEvent<HTMLFormElement>): Promise<void> {
