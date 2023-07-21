@@ -53,3 +53,9 @@
     5. On form submit, object is added to Firebase db
     6. Figure out input to add art piece to form and add to Firebase Store
   * _admin homepage allows scheduling of art pieces_
+    1. Queue and All Art different components.
+    2. On queue page, add art to queue
+    3. On queue page, reorder queue
+    4. Set timer for each item on the queue page.
+    5. Queue is category in Realtime DB, so queue is an array of objects with reference ids and timer and order number in the queue
+    6. Frontfacing webpage grabs item first in the queue.
