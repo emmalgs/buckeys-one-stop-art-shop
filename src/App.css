@@ -78,7 +78,7 @@ button.buy:hover {
 
 /* ADMIN */
 
-.queue-list {
+.all-art-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
