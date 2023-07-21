@@ -1,8 +1,22 @@
-function AdminHeader(props) {
+import { auth } from '../../firebase'
+
+interface HeaderProps {
+  loginClick: () => void;
+  logoutViewClick: () => void;
+}
+
+function AdminHeader(props: HeaderProps) {
+  let currentLoginOrOutBtn = null;
+
+  if (auth.currentUser == null) {
+    currentLoginOrOutBtn = <button onClick={props.loginClick}>Admin Login</button>
+  } else if (auth.currentUser != null) {
+    currentLoginOrOutBtn = <button onClick={props.logoutViewClick}>Logout</button>
+  }
   return (
     <div className="header">
       <h1>Buckey's Backend</h1>
-      <button onClick={props.loginClick}>Admin Login</button>
+      {currentLoginOrOutBtn}
       <button>Add Art</button>
       <button>View Queue</button>
     </div>
