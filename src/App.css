@@ -96,3 +96,19 @@ button.buy:hover {
   background-color: lightcyan;
   cursor: pointer;
 }
+
+.art-details {
+  background-color: pink;
+  padding: 20px;
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.art-btns {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
