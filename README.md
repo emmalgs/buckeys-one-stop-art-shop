@@ -41,3 +41,15 @@
 * 3:00 Research Firebase realtime
 * 3:30 Research firebase realtime
 * 4:30 Seed smaple firebase realtime data
+
+#### Friday 07/21
+
+* _Plan for today:_ 
+  * _build out admin page with form to submit art to db_
+    1. Separate AdminControl
+    2. Routing to /admin
+    3. Setup user auth in Firebase
+    4. AdminControl has button to form once logged in
+    5. On form submit, object is added to Firebase db
+    6. Figure out input to add art piece to form and add to Firebase Store
+  * _admin homepage allows scheduling of art pieces_
