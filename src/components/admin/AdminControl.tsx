@@ -16,8 +16,7 @@ interface ArtObj {
 function AdminControl() {
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [artQueue, setArtQueue] = useState<ArtObj[]>([]);
-  const [selectedArt, setSelectedArt] = useState(null);
-  const [error, setError] = useState(null);
+  // const [selectedArt, setSelectedArt] = useState(null);
   const [loginView, setLoginView] = useState(false);
 
   useEffect(() => {
@@ -42,12 +41,27 @@ function AdminControl() {
     setFormVisibleOnPage(false);
   }
 
-  return (
-    <div className='admin-body'>
-      <AdminHeader loginClick={handleLoginViewClick} />
-      <ArtQueueForm />
-    </div>
-  )
+  if (auth.currentUser == null) {
+    let currentView = null;
+    if (loginView) {
+      currentView = <AdminLogin />
+    } else {
+      currentView = <p>Please login to your admin account</p>
+    }
+    return (
+      <div className='admin-body'>
+        <AdminHeader loginClick={handleLoginViewClick} />
+        {currentView}
+      </div>
+    )
+  } else if (auth.currentUser != null) {
+    return (
+      <div className='admin-body'>
+        <AdminHeader loginClick={handleLoginViewClick} />
+        <ArtQueueForm />
+      </div>
+    )
+  }
 }
 
 export default AdminControl;
