@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, push, set } from "firebase/database";
 import { db, auth } from "../../firebase";
 import AdminLogin from './AdminLogin';
 import ArtQueueForm from './ArtQueueForm';
@@ -39,6 +39,17 @@ function AdminControl() {
     });
     return () => unSubscribe();
   }, []);
+
+  const handleAddArtSubmit = (artwork: ArtObj) => {
+    const newDataRef = push(ref(db, 'art'));
+    set(newDataRef, artwork)
+    .then(() => {
+      console.log('added it!');
+    })
+    .catch((error: { message: string} ) => {
+      console.log(`error! ${error.message}`)
+    })
+  }
 
   const handleLoginViewClick = () => {
     setLoginView(true);
@@ -95,7 +106,7 @@ function AdminControl() {
     if (logoutView) {
       currentView = <AdminLogout />
     } else if (formVisibleOnPage) {
-      currentView = <ArtQueueForm />
+      currentView = <ArtQueueForm addSomeArt={handleAddArtSubmit} />
     } else if (viewQueue) {
       currentView = <QueueList allArt={artQueue} />
     }
