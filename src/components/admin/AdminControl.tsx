@@ -6,6 +6,7 @@ import ArtQueueForm from './ArtQueueForm';
 import AdminHeader from './AdminHeader';
 import AdminLogout from './AdminLogout';
 import QueueList from './QueueList';
+import ArtDetails from './ArtDetails';
 
 interface ArtObj {
   title: string;
@@ -18,7 +19,7 @@ interface ArtObj {
 function AdminControl() {
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [artQueue, setArtQueue] = useState<ArtObj[]>([]);
-  // const [selectedArt, setSelectedArt] = useState(null);
+  const [selectedArt, setSelectedArt] = useState<ArtObj | null>(null);
   const [loginView, setLoginView] = useState(false);
   const [logoutView, setLogoutView] = useState(false);
   const [viewQueue, setViewQueue] = useState(false);
@@ -46,7 +47,7 @@ function AdminControl() {
     return () => unSubscribe();
   }, []);
 
-  const handleAddArtSubmit = (artwork: ArtObj) => {
+  const handleAddArtSubmit = (artwork) => {
     const newDataRef = push(ref(db, 'art'));
     set(newDataRef, artwork)
     .then(() => {
@@ -57,12 +58,18 @@ function AdminControl() {
     })
   }
 
+  const handleSelectArtClick = (id: string) => {
+    const selection = artQueue.filter((artwork) => artwork.id === id)[0]
+    setSelectedArt(selection);
+  }
+
   const handleLoginViewClick = () => {
     setLoginView(true);
     setFormVisibleOnPage(false);
     setLogoutView(false);
     setViewQueue(false);
     setFormVisibleOnPage(false);
+    setSelectedArt(null);
   }
 
   const handleLogoutViewClick = () => {
@@ -71,6 +78,7 @@ function AdminControl() {
     setLogoutView(true);
     setViewQueue(false);
     setFormVisibleOnPage(false);
+    setSelectedArt(null);
   }
 
   const handleViewQueueClick = () => {
@@ -79,6 +87,7 @@ function AdminControl() {
     setLogoutView(false);
     setViewQueue(true);
     setFormVisibleOnPage(false);
+    setSelectedArt(null);
   }
 
   const handleAddArtClick = () => {
@@ -87,6 +96,7 @@ function AdminControl() {
     setLogoutView(false);
     setViewQueue(false);
     setFormVisibleOnPage(true);
+    setSelectedArt(null);
   }
 
 
@@ -113,10 +123,12 @@ function AdminControl() {
       currentView = <AdminLogout />
     } else if (formVisibleOnPage) {
       currentView = <ArtQueueForm addSomeArt={handleAddArtSubmit} />
+    } else if (selectedArt) {
+      currentView = <ArtDetails selection={selectedArt} />
     } else if (viewQueue) {
-      currentView = <QueueList allArt={artQueue} />
+      currentView = <QueueList allArt={artQueue} onArtClick={handleSelectArtClick} />
     } else {
-      currentView = <QueueList allArt={artQueue} />
+      currentView = <QueueList allArt={artQueue} onArtClick={handleSelectArtClick} />
     }
     return (
       <div className='admin-body'>
