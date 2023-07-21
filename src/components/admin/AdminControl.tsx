@@ -2,6 +2,8 @@ import React, { userState, useEffect, useState } from 'react';
 import { ref, onValue } from "firebase/database";
 import { db, auth } from "../../firebase";
 import AdminLogin from './AdminLogin';
+import ArtQueueForm from './ArtQueueForm';
+import AdminHeader from './AdminHeader';
 
 interface ArtObj {
   title: string;
@@ -16,6 +18,7 @@ function AdminControl() {
   const [artQueue, setArtQueue] = useState<ArtObj[]>([]);
   const [selectedArt, setSelectedArt] = useState(null);
   const [error, setError] = useState(null);
+  const [loginView, setLoginView] = useState(false);
 
   useEffect(() => {
     const artdb = ref(db, 'art/');
@@ -34,9 +37,15 @@ function AdminControl() {
     return () => unSubscribe();
   }, []);
 
+  const handleLoginViewClick = () => {
+    setLoginView(true);
+    setFormVisibleOnPage(false);
+  }
+
   return (
-    <div>
-      <AdminLogin />
+    <div className='admin-body'>
+      <AdminHeader loginClick={handleLoginViewClick} />
+      <ArtQueueForm />
     </div>
   )
 }
