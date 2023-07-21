@@ -1,9 +1,10 @@
-import React, { userState, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ref, onValue } from "firebase/database";
 import { db, auth } from "../../firebase";
 import AdminLogin from './AdminLogin';
 import ArtQueueForm from './ArtQueueForm';
 import AdminHeader from './AdminHeader';
+import AdminLogout from './AdminLogout';
 
 interface ArtObj {
   title: string;
@@ -18,6 +19,7 @@ function AdminControl() {
   const [artQueue, setArtQueue] = useState<ArtObj[]>([]);
   // const [selectedArt, setSelectedArt] = useState(null);
   const [loginView, setLoginView] = useState(false);
+  const [logoutView, setLogoutView] = useState(false);
 
   useEffect(() => {
     const artdb = ref(db, 'art/');
@@ -39,7 +41,15 @@ function AdminControl() {
   const handleLoginViewClick = () => {
     setLoginView(true);
     setFormVisibleOnPage(false);
+    setLogoutView(false);
   }
+
+  const handleLogoutViewClick = () => {
+    setLoginView(false);
+    setFormVisibleOnPage(false);
+    setLogoutView(true);
+  }
+
 
   if (auth.currentUser == null) {
     let currentView = null;
@@ -50,15 +60,21 @@ function AdminControl() {
     }
     return (
       <div className='admin-body'>
-        <AdminHeader loginClick={handleLoginViewClick} />
+        <AdminHeader loginClick={handleLoginViewClick} logoutViewClick={handleLogoutViewClick}/>
         {currentView}
       </div>
     )
   } else if (auth.currentUser != null) {
+    let currentView = null;
+    if (logoutView) {
+      currentView = <AdminLogout />
+    } else {
+      currentView = <ArtQueueForm />
+    }
     return (
       <div className='admin-body'>
-        <AdminHeader loginClick={handleLoginViewClick} />
-        <ArtQueueForm />
+        <AdminHeader loginClick={handleLoginViewClick}logoutViewClick={handleLogoutViewClick} />
+        {currentView}
       </div>
     )
   }
