@@ -5,8 +5,8 @@ import AdminLogin from './AdminLogin';
 import ArtQueueForm from './ArtQueueForm';
 import AdminHeader from './AdminHeader';
 import AdminLogout from './AdminLogout';
-import QueueList from './QueueList';
 import ArtDetails from './ArtDetails';
+import AllArtList from './AllArtList';
 
 interface ArtObj {
   title: string;
@@ -18,7 +18,7 @@ interface ArtObj {
 
 function AdminControl() {
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
-  const [artQueue, setArtQueue] = useState<ArtObj[]>([]);
+  const [artList, setArtList] = useState<ArtObj[]>([]);
   const [selectedArt, setSelectedArt] = useState<ArtObj | null>(null);
   const [loginView, setLoginView] = useState(false);
   const [logoutView, setLogoutView] = useState(false);
@@ -38,7 +38,7 @@ function AdminControl() {
         }
         artworks.push(artwork);
       });
-      setArtQueue(artworks)
+      setArtList(artworks)
       console.log(artworks)
     },
     (error) => {
@@ -59,7 +59,7 @@ function AdminControl() {
   }
 
   const handleSelectArtClick = (id: string) => {
-    const selection = artQueue.filter((artwork) => artwork.id === id)[0]
+    const selection = artList.filter((artwork) => artwork.id === id)[0]
     setSelectedArt(selection);
   }
 
@@ -143,9 +143,9 @@ function AdminControl() {
           selection={selectedArt} 
           deleteArt={handleDeleteArtClick}/>
     } else if (viewQueue) {
-      currentView = <QueueList allArt={artQueue} onArtClick={handleSelectArtClick} />
+      currentView = <AllArtList allArt={artList} onArtClick={handleSelectArtClick} />
     } else {
-      currentView = <QueueList allArt={artQueue} onArtClick={handleSelectArtClick} />
+      currentView = <AllArtList allArt={artList} onArtClick={handleSelectArtClick} />
     }
     return (
       <div className='admin-body'>
