@@ -63,6 +63,20 @@ function AdminControl() {
     setSelectedArt(selection);
   }
 
+  const handleDeleteArtClick = (id: string) => {
+    const dataRef = ref(db, `art/${id}`);
+    set(dataRef, null)
+      .then(() => {
+        console.log('deleted!');
+      })
+      .catch((error: { message: string}) => {
+        console.log(`error! ${error.message}`)
+      });
+    setTimeout(() => {
+      handleViewQueueClick()
+    }, 1000);
+  }
+
   const handleLoginViewClick = () => {
     setLoginView(true);
     setFormVisibleOnPage(false);
@@ -124,7 +138,10 @@ function AdminControl() {
     } else if (formVisibleOnPage) {
       currentView = <ArtQueueForm addSomeArt={handleAddArtSubmit} />
     } else if (selectedArt) {
-      currentView = <ArtDetails selection={selectedArt} />
+      currentView = 
+        <ArtDetails 
+          selection={selectedArt} 
+          deleteArt={handleDeleteArtClick}/>
     } else if (viewQueue) {
       currentView = <QueueList allArt={artQueue} onArtClick={handleSelectArtClick} />
     } else {
