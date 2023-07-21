@@ -9,7 +9,9 @@ interface ArtObj {
   description: string;
   price: string;
   imageUrl: string;
+  id: string;
 }
+
 let uploadedImg: File | null = null
 
 function ArtQueueForm(props: FormProps) {
