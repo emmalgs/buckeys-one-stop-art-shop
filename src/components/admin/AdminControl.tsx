@@ -12,7 +12,7 @@ interface ArtObj {
   description: string;
   price: string;
   imageUrl: string;
-  available: boolean;
+  id: string;
 }
 
 function AdminControl() {
@@ -29,10 +29,16 @@ function AdminControl() {
       artdb, (snapshot: import("firebase/database").DataSnapshot) => {
       const artworks: ArtObj[] = [];
       const data = snapshot.val() as Record<string, ArtObj>;
-      Object.keys(data).forEach((art) => {
-        artworks.push(data[art]);
+      const keys = Object.keys(data)
+      keys.forEach((art, index) => {
+        const artwork = {
+          ...data[art],
+          id: keys[index]
+        }
+        artworks.push(artwork);
       });
       setArtQueue(artworks)
+      console.log(artworks)
     },
     (error) => {
       console.log(error);
@@ -108,6 +114,8 @@ function AdminControl() {
     } else if (formVisibleOnPage) {
       currentView = <ArtQueueForm addSomeArt={handleAddArtSubmit} />
     } else if (viewQueue) {
+      currentView = <QueueList allArt={artQueue} />
+    } else {
       currentView = <QueueList allArt={artQueue} />
     }
     return (

@@ -7,26 +7,23 @@ interface ArtObj {
   description: string;
   price: string;
   imageUrl: string;
-  available: boolean;
+  id: string;
 }
 
 function QueueList(props: QueueProps) {
   return (
     <div className="queue-list">
-      <ol>
-        {props.allArt.map((art) => {
-          return (
-            <li>
-              <ul>
-                <li>{art.title}</li>
-                <li>{art.description}</li>
-                <li>{art.price}</li>
-                <li><img src={art.imageUrl} /></li>
-              </ul>
-            </li>
-          )
-        })}
-      </ol>
+      {props.allArt.map((art) => {
+        return (
+          <div className="art" key={art.id} id={art.id}>
+            <p>{art.title}</p>
+            <p>{art.description}</p>
+            <p>{art.price}</p>
+            <p><img src={art.imageUrl} /></p>
+          </div>
+          );
+        })
+      }
     </div>
   )
 }

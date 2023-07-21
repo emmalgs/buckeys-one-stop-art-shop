@@ -19,6 +19,7 @@ function ArtQueueForm(props: FormProps) {
     }
     console.log(uploadedImg)
   }
+
   async function submitArt(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
     if (!uploadedImg) {
