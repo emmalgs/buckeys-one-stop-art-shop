@@ -3,6 +3,8 @@ import { auth } from '../../firebase'
 interface HeaderProps {
   loginClick: () => void;
   logoutViewClick: () => void;
+  viewQueueClick: () => void;
+  addArtClick: () => void;
 }
 
 function AdminHeader(props: HeaderProps) {
@@ -17,8 +19,8 @@ function AdminHeader(props: HeaderProps) {
     <div className="header">
       <h1>Buckey's Backend</h1>
       {currentLoginOrOutBtn}
-      <button>Add Art</button>
-      <button>View Queue</button>
+      <button onClick={props.addArtClick}>Add Art</button>
+      <button onClick={props.viewQueueClick}>View Queue</button>
     </div>
   )
 }
