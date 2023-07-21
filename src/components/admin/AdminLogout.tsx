@@ -16,7 +16,7 @@ function AdminLogout() {
   }
   return (
     <div className='logout'>
-      <h2>Logout</h2>
+      <h2>Logout of Admin</h2>
       {logoutSuccess}
       <br />
       <button onClick={logout}>Logout</button>
