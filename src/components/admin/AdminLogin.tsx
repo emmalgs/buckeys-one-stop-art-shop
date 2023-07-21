@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { auth } from '../../firebase';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 function AdminLogin() {
   const [loginSuccess, setLoginSuccess] = useState<string>('');
-  const [logoutSuccess, setLogoutSuccess] = useState('');
+
 
   function login(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
