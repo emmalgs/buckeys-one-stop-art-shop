@@ -7,6 +7,7 @@ import AdminHeader from './AdminHeader';
 import AdminLogout from './AdminLogout';
 import ArtDetails from './ArtDetails';
 import AllArtList from './AllArtList';
+import EditQueue from './EditQueue';
 
 interface ArtObj {
   title: string;
