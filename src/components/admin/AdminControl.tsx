@@ -17,7 +17,7 @@ interface ArtObj {
   id: string;
 }
 
-interface QueueObj {
+export interface QueueObj {
   id: string;
   title: string;
   description: string;
@@ -215,7 +215,7 @@ function AdminControl() {
     } else if (allArtView) {
       currentView = <AllArtList allArt={artList} onArtClick={handleSelectArtClick} onAddToQueueClick={handleAddToQueue} />
     } else if (viewQueue) {
-      currentView = <EditQueue />
+      currentView = <EditQueue queue = {queueList}/>
     }
     return (
       <div className='admin-body'>
