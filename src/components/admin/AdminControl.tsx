@@ -31,6 +31,7 @@ interface QueueObj {
 function AdminControl() {
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [artList, setArtList] = useState<ArtObj[]>([]);
+  const [queueList, setQueueList] = useState<QueueObj[]>([]);
   const [selectedArt, setSelectedArt] = useState<ArtObj | null>(null);
   const [loginView, setLoginView] = useState(false);
   const [logoutView, setLogoutView] = useState(false);
@@ -57,6 +58,28 @@ function AdminControl() {
     (error) => {
       console.log(error);
     });
+    return () => unSubscribe();
+  }, []);
+
+  useEffect(() => {
+    const queuedb = ref(db, 'queue');
+    const unSubscribe = onValue(
+      queuedb, (snapshot: import("firebase/database").DataSnapshot) => {
+        const artworks: QueueObj[] = [];
+        const data = snapshot.val() as Record<string, QueueObj>;
+        const keys = Object.keys(data)
+        keys.forEach((art) => {
+          const artwork = {
+            ...data[art],
+          }
+          artworks.push(artwork);
+        });
+        setQueueList(artworks)
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
     return () => unSubscribe();
   }, []);
 
@@ -88,6 +111,12 @@ function AdminControl() {
     setTimeout(() => {
       handleViewQueueClick()
     }, 1000);
+  }
+
+  const handleAddToQueue = (id: string) => {
+    const selection = artList.filter((artwork) => artwork.id === id)[0]
+    
+
   }
 
   const handleLoginViewClick = () => {
@@ -171,7 +200,7 @@ function AdminControl() {
           selection={selectedArt} 
           deleteArt={handleDeleteArtClick}/>
     } else if (allArtView) {
-      currentView = <AllArtList allArt={artList} onArtClick={handleSelectArtClick} />
+      currentView = <AllArtList allArt={artList} onArtClick={handleSelectArtClick} onAddToQueueClick={handleAddToQueue} />
     } else if (viewQueue) {
       currentView = <EditQueue />
     }
