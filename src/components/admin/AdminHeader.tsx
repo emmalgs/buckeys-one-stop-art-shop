@@ -5,6 +5,7 @@ interface HeaderProps {
   logoutViewClick: () => void;
   viewQueueClick: () => void;
   addArtClick: () => void;
+  viewAllArtClick: () => void;
 }
 
 function AdminHeader(props: HeaderProps) {
@@ -20,8 +21,8 @@ function AdminHeader(props: HeaderProps) {
       <h1>Buckey's Backend</h1>
       {currentLoginOrOutBtn}
       <button onClick={props.addArtClick}>Add Art</button>
-      <button onClick={props.viewQueueClick}>View All Art</button>
-      <button>Art Queue</button>
+      <button onClick={props.viewAllArtClick}>View All Art</button>
+      <button onClick={props.viewQueueClick}>Art Queue</button>
     </div>
   )
 }

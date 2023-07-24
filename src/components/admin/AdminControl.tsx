@@ -17,6 +17,17 @@ interface ArtObj {
   id: string;
 }
 
+interface QueueObj {
+  id: string;
+  title: string;
+  description: string;
+  price: string;
+  imageUrl: string;
+  queueNumber: number;
+  timer: number;
+  available: boolean;
+}
+
 function AdminControl() {
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [artList, setArtList] = useState<ArtObj[]>([]);
@@ -24,6 +35,7 @@ function AdminControl() {
   const [loginView, setLoginView] = useState(false);
   const [logoutView, setLogoutView] = useState(false);
   const [viewQueue, setViewQueue] = useState(false);
+  const [allArtView, setAllArtView] = useState(false);
 
   useEffect(() => {
     const artdb = ref(db, 'art/');
@@ -48,7 +60,7 @@ function AdminControl() {
     return () => unSubscribe();
   }, []);
 
-  const handleAddArtSubmit = (artwork) => {
+  const handleAddArtSubmit = (artwork: ArtObj) => {
     const newDataRef = push(ref(db, 'art'));
     set(newDataRef, artwork)
     .then(() => {
@@ -85,6 +97,7 @@ function AdminControl() {
     setViewQueue(false);
     setFormVisibleOnPage(false);
     setSelectedArt(null);
+    setAllArtView(false);
   }
 
   const handleLogoutViewClick = () => {
@@ -94,6 +107,7 @@ function AdminControl() {
     setViewQueue(false);
     setFormVisibleOnPage(false);
     setSelectedArt(null);
+    setAllArtView(false);
   }
 
   const handleViewQueueClick = () => {
@@ -103,6 +117,7 @@ function AdminControl() {
     setViewQueue(true);
     setFormVisibleOnPage(false);
     setSelectedArt(null);
+    setAllArtView(false);
   }
 
   const handleAddArtClick = () => {
@@ -112,6 +127,17 @@ function AdminControl() {
     setViewQueue(false);
     setFormVisibleOnPage(true);
     setSelectedArt(null);
+    setAllArtView(false);
+  }
+
+  const handleViewAllArtClick = () => {
+    setLoginView(false);
+    setFormVisibleOnPage(false);
+    setLogoutView(false);
+    setViewQueue(false);
+    setFormVisibleOnPage(false);
+    setSelectedArt(null);
+    setAllArtView(true);
   }
 
 
@@ -128,6 +154,7 @@ function AdminControl() {
           loginClick={handleLoginViewClick} 
           logoutViewClick={handleLogoutViewClick} 
           viewQueueClick={handleViewQueueClick}
+          viewAllArtClick={handleViewAllArtClick}
           addArtClick={handleAddArtClick} />
         {currentView}
       </div>
@@ -143,10 +170,10 @@ function AdminControl() {
         <ArtDetails 
           selection={selectedArt} 
           deleteArt={handleDeleteArtClick}/>
+    } else if (allArtView) {
+      currentView = <AllArtList allArt={artList} onArtClick={handleSelectArtClick} />
     } else if (viewQueue) {
-      currentView = <AllArtList allArt={artList} onArtClick={handleSelectArtClick} />
-    } else {
-      currentView = <AllArtList allArt={artList} onArtClick={handleSelectArtClick} />
+      currentView = <EditQueue />
     }
     return (
       <div className='admin-body'>
@@ -154,6 +181,7 @@ function AdminControl() {
           loginClick={handleLoginViewClick}
           logoutViewClick={handleLogoutViewClick}
           viewQueueClick={handleViewQueueClick}
+          viewAllArtClick={handleViewAllArtClick}
           addArtClick={handleAddArtClick} />
         {currentView}
       </div>
