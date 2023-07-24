@@ -19,7 +19,7 @@ function AllArtList(props: QueueProps) {
         return (
           <div key={art.id}>
             <div
-              className="art-queue-item"
+              className="art-list-item"
               id={art.id}
               onClick={() => props.onArtClick(art.id)}
             >
