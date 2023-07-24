@@ -132,6 +132,8 @@ function AdminControl() {
       });
   }
 
+
+
   const handleLoginViewClick = () => {
     setLoginView(true);
     setFormVisibleOnPage(false);
@@ -213,7 +215,12 @@ function AdminControl() {
           selection={selectedArt} 
           deleteArt={handleDeleteArtClick}/>
     } else if (allArtView) {
-      currentView = <AllArtList allArt={artList} onArtClick={handleSelectArtClick} onAddToQueueClick={handleAddToQueue} />
+      currentView = 
+        <AllArtList 
+          allArt={artList} 
+          queue={queueList}
+          onArtClick={handleSelectArtClick} 
+          onAddToQueueClick={handleAddToQueue} />
     } else if (viewQueue) {
       currentView = <EditQueue queue = {queueList}/>
     }

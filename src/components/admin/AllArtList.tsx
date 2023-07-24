@@ -1,5 +1,8 @@
+import { QueueObj } from "./AdminControl";
+
 interface QueueProps {
   allArt: Array<ArtObj>;
+  queue: Array<QueueObj>;
   onArtClick: (arg0: string) => void;
   onAddToQueueClick: (id: string) => void;
 }
@@ -13,6 +16,12 @@ interface ArtObj {
 }
 
 function AllArtList(props: QueueProps) {
+  const checkForArtItemInQueue = (
+    array: Array<QueueObj>,
+    id: string
+  ) => {
+    return array.some((art) => art.id === id);
+  };
   return (
     <div className="all-art-list">
       {props.allArt.map((art) => {
@@ -35,9 +44,13 @@ function AllArtList(props: QueueProps) {
               </p>
               {/* Add button conditional if art already exists in queue then it should read Added to Queue */}
             </div>
-            <button onClick={() => props.onAddToQueueClick(art.id)}>
-              Add To Queue
-            </button>
+            {checkForArtItemInQueue(props.queue, art.id) ? (
+              <p>Queued</p>
+            ) : (
+              <button onClick={() => props.onAddToQueueClick(art.id)}>
+                Add To Queue
+              </button>
+            )}
           </div>
         );
       })}
