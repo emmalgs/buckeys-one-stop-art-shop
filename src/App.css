@@ -78,7 +78,8 @@ button.buy:hover {
 
 /* ADMIN */
 
-.all-art-list {
+.all-art-list,
+.queue {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -86,13 +87,14 @@ button.buy:hover {
   margin: auto;
 }
 
-.art-queue-item {
+.art-list-item,
+.queue-item {
   display: flex;
   justify-content: space-evenly;
   background-color: pink;
 }
 
-.art-queue-item:hover {
+.art-list-item:hover {
   background-color: lightcyan;
   cursor: pointer;
 }
