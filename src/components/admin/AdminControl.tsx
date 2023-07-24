@@ -75,6 +75,7 @@ function AdminControl() {
           artworks.push(artwork);
         });
         setQueueList(artworks)
+        console.log(artworks)
       },
       (error) => {
         console.log(error);
@@ -115,8 +116,20 @@ function AdminControl() {
 
   const handleAddToQueue = (id: string) => {
     const selection = artList.filter((artwork) => artwork.id === id)[0]
-    
-
+    const queueItem: QueueObj = {
+      ...selection,
+      queueNumber: queueList.length + 1,
+      timer: 2000,
+      available: true
+    }
+    const newDataRef = push(ref(db, 'queue'));
+    set(newDataRef, queueItem)
+      .then(() => {
+        console.log('added to queue!')
+      })
+      .catch((error: {message: string }) => {
+        console.log(`error! : ${error.message}`)
+      });
   }
 
   const handleLoginViewClick = () => {
