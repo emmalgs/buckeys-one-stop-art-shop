@@ -1,6 +1,7 @@
 interface DetailProps {
   selection: ArtObj;
-  deleteArt: (id: string) => void
+  deleteArt: (id: string) => void;
+  editArt: () => void;
 }
 
 interface ArtObj {
@@ -23,7 +24,7 @@ function ArtDetails(props: DetailProps) {
       </p>
       <div className="art-btns">
         <button onClick={() => props.deleteArt(art.id)}>Delete</button>
-        <button>Edit</button>
+        <button onClick={props.editArt}>Edit</button>
         <button>Sell</button>
       </div>
     </div>

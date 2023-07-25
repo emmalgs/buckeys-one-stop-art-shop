@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ref, onValue, push, set } from "firebase/database";
+import { ref, onValue, push, set, update } from "firebase/database";
 import { db, auth } from "../../firebase";
 import AdminLogin from './AdminLogin';
 import ArtQueueForm from './AddArtForm';
@@ -23,7 +23,6 @@ function AdminControl() {
   const [selectedArt, setSelectedArt] = useState<ArtObj | null>(null);
   const [loginView, setLoginView] = useState(false);
   const [logoutView, setLogoutView] = useState(false);
-  const [allArtView, setAllArtView] = useState(false);
   const [editing, setEditing] = useState(false);
 
   useEffect(() => {
@@ -79,13 +78,25 @@ function AdminControl() {
     }, 1000);
   }
 
+  const handleEditArtSubmit = (artwork: ArtObj) => {
+    const dataRef = ref(db, `art/${artwork.id}`);
+    update(dataRef, artwork)
+      .then(() => {
+        console.log('updated!');
+      })
+      .catch((error: { message: string}) => {
+        console.log(`error! ${error.message}`)
+      });
+    setEditing(false);
+    setSelectedArt(null);
+  }
+
   const handleLoginViewClick = () => {
     setLoginView(true);
     setFormVisibleOnPage(false);
     setLogoutView(false);
     setFormVisibleOnPage(false);
     setSelectedArt(null);
-    setAllArtView(false);
     setEditing(false);
   }
 
@@ -95,7 +106,6 @@ function AdminControl() {
     setLogoutView(true);
     setFormVisibleOnPage(false);
     setSelectedArt(null);
-    setAllArtView(false);
     setEditing(false);
   }
 
@@ -105,7 +115,6 @@ function AdminControl() {
     setLogoutView(false);
     setFormVisibleOnPage(false);
     setSelectedArt(null);
-    setAllArtView(false);
     setEditing(false);
   }
 
@@ -115,7 +124,6 @@ function AdminControl() {
     setLogoutView(false);
     setFormVisibleOnPage(true);
     setSelectedArt(null);
-    setAllArtView(false);
     setEditing(false);
   }
 
@@ -125,7 +133,6 @@ function AdminControl() {
     setLogoutView(false);
     setFormVisibleOnPage(false);
     setSelectedArt(null);
-    setAllArtView(true);
     setEditing(false);
   }
 
@@ -134,7 +141,6 @@ function AdminControl() {
     setFormVisibleOnPage(false);
     setLogoutView(false);
     setFormVisibleOnPage(false);
-    setAllArtView(false);
     setEditing(true);
   }
 
@@ -159,25 +165,29 @@ function AdminControl() {
     let currentView = null;
     if (logoutView) {
       currentView = <AdminLogout />
-    } else if (formVisibleOnPage) {
-      currentView = <ArtQueueForm addSomeArt={handleAddArtSubmit} />
-    } else if (selectedArt) {
-      currentView = 
-        <ArtDetails 
-          selection={selectedArt} 
-          deleteArt={handleDeleteArtClick}/>
-    } else if (allArtView) {
-      currentView = 
-        <AllArtList 
-          allArt={artList} 
-          onArtClick={handleSelectArtClick} 
-          onAddArtClick={handleAddArtClick} />
     } else if (editing) {
       currentView = 
         <EditArtForm
           artwork={selectedArt}
-          updateArt={}
-    }
+          updateArt={handleEditArtSubmit} /> 
+    } else if (formVisibleOnPage) {
+      currentView = 
+        <ArtQueueForm 
+          addSomeArt={handleAddArtSubmit}
+           />
+    } else if (selectedArt != null) {
+      currentView = 
+        <ArtDetails 
+          selection={selectedArt} 
+          deleteArt={handleDeleteArtClick}
+          editArt={handleViewEditingClick} />
+    } else {
+        currentView = 
+          <AllArtList 
+            allArt={artList} 
+            onArtClick={handleSelectArtClick} 
+            onAddArtClick={handleAddArtClick} />
+      }
     return (
       <div className='admin-body'>
         <AdminHeader 
