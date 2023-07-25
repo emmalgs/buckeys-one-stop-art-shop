@@ -65,3 +65,7 @@
 * _Plan for today:_
   * Implement timer and start button in queue
   * Connect frontend to queue collection, display timer
+  * Timer
+    1. Universal timer that admin sets.
+    2. Start and stop button on the queue
+    3. 
