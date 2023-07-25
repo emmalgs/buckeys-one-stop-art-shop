@@ -1,12 +1,11 @@
 import { QueueObj } from "./AdminControl";
 import { db } from "../../firebase";
-import { ref, onValue, push, set } from "firebase/database";
+import { ref, onValue, set } from "firebase/database";
 import { useState, useEffect } from 'react';
 
 interface QueueProps {
   queue: Array<QueueObj>
 }
-
 
 function EditQueue(props: QueueProps) {
   const [timer, setTimer] = useState<number>(0)
@@ -17,6 +16,7 @@ function EditQueue(props: QueueProps) {
     const unSubscribe = onValue(
       timerdb, (snapshot: import("firebase/database").DataSnapshot) => {
         const data = snapshot.val() as number;
+        console.log(data)
         setTimer(data);
       },
       (error) => {
@@ -29,16 +29,25 @@ function EditQueue(props: QueueProps) {
   const startTimerClick = () => {
     if (!timerInterval && timer > 0) {
       timerInterval = setInterval(() => {
-        setTimer(timer - 1)
+        setTimer(prevTimer => prevTimer - 1)
+        const timerRef = ref(db, 'timer');
+        set(timerRef, timer)
+          .then(() => {
+            console.log('timer updated!')
+          })
+          .catch((error: { message: string } ) => {
+            console.log(`error! ${error.message}`)
+          })
       }, 1000)
     }
   }
 
   return (
     <div className="queue">
-      <button>Start Timer</button>
+      <button onClick={startTimerClick}>Start Timer</button>
       <button>Stop Timer</button>
       <button>Edit Queue</button>
+      <p>{timer}</p>
       {props.queue.map((art) => {
         return (
           <div key={art.id} id={art.id} className="queue-item">
