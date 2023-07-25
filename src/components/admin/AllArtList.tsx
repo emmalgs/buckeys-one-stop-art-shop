@@ -24,7 +24,7 @@ function AllArtList(props: ArtProps) {
     setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
     setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
   }, 1000);
-  
+
   return (
     <div className="admin-main">
       <div className="for-sale">
@@ -33,11 +33,29 @@ function AllArtList(props: ArtProps) {
           <p>Nothings up for sale. Please add an item to your sale!</p>
         ) : (
           <div>
-            <p>{props.forSale.title}</p>
-            <p>{days} Days</p>
-            <p>{hours} Hours</p>
-            <p>{minutes} Minutes</p>
-            <p>{seconds} Seconds</p>
+            <div className="timer">
+              <div className="days">
+                <p>{days}</p>
+                <span>DAYS</span>
+              </div>
+              <div className="hours">
+                <p>{hours}</p>
+                <span>HRS</span>
+              </div>
+              <div className="minutes">
+                <p>{minutes}</p>
+                <span>MIN</span>
+              </div>
+              <div className="seconds">
+                <p>{seconds}</p>
+                <span>SEC</span>
+              </div>
+            </div>
+            <div className="timer-art">
+              <h3>{props.forSale.title}</h3>
+              <p>${parseInt(props.forSale.price).toFixed(2)}</p>
+              <img src={props.forSale.imageUrl} />
+            </div>
           </div>
         )}
       </div>

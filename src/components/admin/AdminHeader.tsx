@@ -15,7 +15,7 @@ function AdminHeader(props: HeaderProps) {
     currentLoginOrOutBtn = <button onClick={props.logoutViewClick}>Logout</button>
   }
   return (
-    <div className="header">
+    <div className="header admin-nav">
       <h1>Buckey's Backend</h1>
       {currentLoginOrOutBtn}
       <button onClick={props.viewAllArtClick}>View All Art</button>

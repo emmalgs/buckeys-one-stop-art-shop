@@ -1,7 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Caprasimo&family=Oi&family=Shrikhand&family=Ultra&family=Unbounded:wght@200;400;800&display=swap');
 
 :root {
+  --blue: #266DD3;
+  --black: #020300;
+  --brown: #36311F;
+  --gold: #DFAF00;
+  --green: #248232;
+  --light: #EDE7E3;
   font-family: 'Unbounded', Helvetica, sans-serif;
+}
+
+body {
+  color: var(--black);
 }
 
 .header {
@@ -78,8 +88,62 @@ button.buy:hover {
 
 /* ADMIN */
 
-.all-art-list,
-.queue {
+.admin-body {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(10, 10vh);
+  gap: 1em;
+}
+.admin-nav {
+  padding: 20px;
+  margin: 20px;
+  grid-area: 1 / 1 / 2 / 7;
+}
+
+.admin-main {
+  grid-area: 2 / 1 / 11 / 7;
+
+  display: grid;
+  grid-template-columns: repeat(10, 9vw);
+  grid-template-rows: repeat(10, 8vh);
+  gap: 1em;
+}
+
+.for-sale {
+  grid-area: 1 / 1 / 11 / 4;
+  margin: 20px;
+  padding: 1em;
+  background: var(--light);
+  margin-bottom: 230px;
+}
+
+.for-sale .timer {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--green);
+  color: var(--light);
+  padding: 1em;
+}
+
+.for-sale .timer p,
+.for-sale .timer span {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.timer-art {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1em;
+  margin: 1em;
+  background-color: var(--gold);
+}
+
+.all-art-list {
+  grid-area: 1 / 4 / 11 / 11;
+
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -87,8 +151,7 @@ button.buy:hover {
   margin: auto;
 }
 
-.art-list-item,
-.queue-item {
+.art-list-item {
   display: flex;
   justify-content: space-evenly;
   background-color: pink;
