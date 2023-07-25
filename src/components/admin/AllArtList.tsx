@@ -11,33 +11,10 @@ interface ArtProps {
 }
 
 function AllArtList(props: ArtProps) {
-  // const [forSale, setForSale] = useState<SaleObj | null>(null);
-  // const [countDownDate, setCountDownDate] = useState<number | null>(null);
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-
-  // useEffect(() => {
-  //   const artdb = ref(db, "sell/");
-  //   const unSubscribe = onValue(
-  //     artdb,
-  //     (snapshot: import("firebase/database").DataSnapshot) => {
-  //       const data = snapshot.val() as Record<string, SaleObj>;
-  //       const index = Object.keys(data);
-  //       const saleItem = data[index[0]];
-  //       setForSale(saleItem);
-  //       const dateData = saleItem.closeDate;
-  //       const jsDate = new Date(dateData);
-  //       setCountDownDate(jsDate.getTime());
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  //   return () => unSubscribe();
-  // }, []);
-  
 
   setInterval(() => {
     const now = new Date().getTime();
