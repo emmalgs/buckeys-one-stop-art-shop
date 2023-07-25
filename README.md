@@ -75,3 +75,6 @@
     1. Universal timer in the db
     2. Function that runs the timer on admin start
     3. SetTimeout, loop through queue array, current index pushes to frontend display
+  * New plan:
+    1. Each queue object gets a start date and an end date
+    2. 
