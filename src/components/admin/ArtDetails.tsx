@@ -1,15 +1,10 @@
+import { ArtObj } from "./AdminControl";
+
 interface DetailProps {
   selection: ArtObj;
   deleteArt: (id: string) => void;
   editArt: () => void;
-}
-
-interface ArtObj {
-  title: string;
-  description: string;
-  price: string;
-  imageUrl: string;
-  id: string;
+  sellArt: () => void;
 }
 
 function ArtDetails(props: DetailProps) {
@@ -25,7 +20,7 @@ function ArtDetails(props: DetailProps) {
       <div className="art-btns">
         <button onClick={() => props.deleteArt(art.id)}>Delete</button>
         <button onClick={props.editArt}>Edit</button>
-        <button>Sell</button>
+        <button onClick={props.sellArt}>Sell</button>
       </div>
     </div>
   );
