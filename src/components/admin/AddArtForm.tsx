@@ -1,14 +1,9 @@
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ArtObj } from './AdminControl';
+import { v4 } from 'uuid';
 
 interface FormProps {
-  addSomeArt: (arg0: ArtObj) => void;
-}
-
-interface ArtObj {
-  title: string;
-  description: string;
-  price: string;
-  imageUrl: string;
+  addSomeArt: (artwork: ArtObj) => void;
 }
 
 let uploadedImg: File | null = null
@@ -24,26 +19,28 @@ function ArtQueueForm(props: FormProps) {
     e.preventDefault();
     if (!uploadedImg) {
       console.error('No image selected');
-      return;
+    } else {
+      const storage = getStorage();
+      const storageRef = ref(storage, `images/${uploadedImg.name}`);
+      await uploadBytes(storageRef, uploadedImg);
+  
+      const imageURL = await getDownloadURL(storageRef);
+  
+      const target = e.target as typeof e.target & {
+        title: { value: string};
+        description: {value: string};
+        price: { value: string };
+      }
+      
+      const art = {
+        title: target.title.value,
+        description: target.description.value,
+        price: target.price.value,
+        imageUrl: imageURL,
+        id: v4()
+      }
+      props.addSomeArt(art);
     }
-    const storage = getStorage();
-    const storageRef = ref(storage, `images/${uploadedImg.name}`);
-    await uploadBytes(storageRef, uploadedImg);
-
-    const imageURL = await getDownloadURL(storageRef);
-
-    const target = e.target as typeof e.target & {
-      title: { value: string};
-      description: {value: string};
-      price: { value: string };
-    }
-    const art = {
-      title: target.title.value,
-      description: target.description.value,
-      price: target.price.value,
-      imageUrl: imageURL
-    }
-    props.addSomeArt(art);
   }
 
   return (
@@ -55,7 +52,7 @@ function ArtQueueForm(props: FormProps) {
         <label>Upload Image: 
           <input type="file" accept="image/*" onChange={handleImageChange}/>
         </label>
-        <button>Add Art</button>
+        <button type="submit">Add Art</button>
       </form>
     </div>
   )
