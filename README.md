@@ -59,3 +59,9 @@
     4. Set timer for each item on the queue page.
     5. Queue is category in Realtime DB, so queue is an array of objects with reference ids and timer and order number in the queue
     6. Frontfacing webpage grabs item first in the queue.
+
+#### Tuesday 07/25
+
+* _Plan for today:_
+  * Implement timer and start button in queue
+  * Connect frontend to queue collection, display timer
