@@ -81,4 +81,8 @@
     3. SetTimeout, loop through queue array, current index pushes to frontend display
   * New plan:
     1. Each queue object gets a start date and an end date
-    2. 
+    2. ...
+  * New new plan:
+    1. Item added to it's own collection called "sell"
+    2. Upon adding to sell collection, admin inputs close date for the item on sale.
+    3. Admin can end the sale early directly from the home page. (Delete)

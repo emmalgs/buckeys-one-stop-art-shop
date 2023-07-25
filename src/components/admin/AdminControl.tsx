@@ -18,7 +18,7 @@ export interface ArtObj {
   id: string;
 }
 
-interface SaleObj {
+export interface SaleObj {
   title: string;
   description: string;
   price: string;
@@ -250,6 +250,7 @@ function AdminControl() {
         currentView = 
           <AllArtList 
             allArt={artList} 
+            // forSale={forSale}
             onArtClick={handleSelectArtClick} 
             onAddArtClick={handleAddArtClick} />
       }
