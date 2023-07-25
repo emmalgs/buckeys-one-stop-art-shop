@@ -24,6 +24,7 @@ function ArtDetails(props: DetailProps) {
       <div className="art-btns">
         <button onClick={() => props.deleteArt(art.id)}>Delete</button>
         <button>Edit</button>
+        <button>Sell</button>
       </div>
     </div>
   );
