@@ -1,5 +1,9 @@
 ### React Components Diagram
-![diagram of react components](./src/assets/img/buckeyscomponent.png)
+#### Frontend Components  
+![diagram of react components](./src/assets/img/buckeyscomponent.png)  
+
+#### Admin Components  
+![diagram of admin react components](./src/assets/img/AdminComponents.png)
 
 ### Sample Main Page (Figma)
 ![figma sketch of main page](./src/assets/img/figma_sketch.png)
