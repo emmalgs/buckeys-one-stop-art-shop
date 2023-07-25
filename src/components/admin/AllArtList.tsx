@@ -1,33 +1,18 @@
-import { QueueObj } from "./AdminControl";
+import { ArtObj } from "./AdminControl";
 
-interface QueueProps {
+interface ArtProps {
   allArt: Array<ArtObj>;
-  queue: Array<QueueObj>;
-  onArtClick: (arg0: string) => void;
-  onAddToQueueClick: (id: string) => void;
+  onArtClick: (id: string) => void;
+  onAddArtClick: () => void;
 }
 
-interface ArtObj {
-  title: string;
-  description: string;
-  price: string;
-  imageUrl: string;
-  id: string;
-}
-
-function AllArtList(props: QueueProps) {
-  const checkForArtItemInQueue = (
-    array: Array<QueueObj>,
-    id: string
-  ) => {
-    return array.some((art) => art.id === id);
-  };
+function AllArtList(props: ArtProps) {
   return (
     <div className="all-art-list">
       {props.allArt.map((art) => {
         return (
-          <div key={art.id}>
             <div
+              key={art.id}
               className="art-list-item"
               id={art.id}
               onClick={() => props.onArtClick(art.id)}
@@ -42,18 +27,10 @@ function AllArtList(props: QueueProps) {
               <p>
                 <img src={art.imageUrl} />
               </p>
-              {/* Add button conditional if art already exists in queue then it should read Added to Queue */}
             </div>
-            {checkForArtItemInQueue(props.queue, art.id) ? (
-              <p>Queued</p>
-            ) : (
-              <button onClick={() => props.onAddToQueueClick(art.id)}>
-                Add To Queue
-              </button>
-            )}
-          </div>
         );
       })}
+      <button onClick={props.onAddArtClick}>+</button>
     </div>
   );
 }
