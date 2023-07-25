@@ -8,6 +8,7 @@ import AdminLogout from './AdminLogout';
 import ArtDetails from './ArtDetails';
 import AllArtList from './AllArtList';
 import EditArtForm from './EditArtForm';
+import SellArtForm from './SellArtForm';
 
 export interface ArtObj {
   title: string;
@@ -17,13 +18,24 @@ export interface ArtObj {
   id: string;
 }
 
+interface SaleObj {
+  title: string;
+  description: string;
+  price: string;
+  imageUrl: string;
+  id: string;
+  closeDate: Date;
+}
+
 function AdminControl() {
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [artList, setArtList] = useState<ArtObj[]>([]);
   const [selectedArt, setSelectedArt] = useState<ArtObj | null>(null);
+  const [forSale, setForSale] = useState<SaleObj | null>(null);
   const [loginView, setLoginView] = useState(false);
   const [logoutView, setLogoutView] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [sellForm, setSellForm] = useState(false);
 
   useEffect(() => {
     const artdb = ref(db, 'art/');
@@ -41,6 +53,21 @@ function AdminControl() {
       });
       setArtList(artworks)
       console.log(artworks)
+    },
+    (error) => {
+      console.log(error);
+    });
+    return () => unSubscribe();
+  }, []);
+
+  useEffect(() => {
+    const artdb = ref(db, 'sell/');
+    const unSubscribe = onValue(
+      artdb, (snapshot: import("firebase/database").DataSnapshot) => {
+      const data = snapshot.val() as Record<string, SaleObj>;
+      const index = Object.keys(data);
+      const saleItem = data[index[0]]
+      setForSale(saleItem)
     },
     (error) => {
       console.log(error);
@@ -91,6 +118,23 @@ function AdminControl() {
     setSelectedArt(null);
   }
 
+  const handleSubmitArtSale = (artwork: ArtObj, date: Date) => {
+    const newDataRef = push(ref(db, 'sell'));
+    const sellArt = { 
+      ...artwork,
+      closeDate: date
+    }
+    set(newDataRef, sellArt)
+      .then(() => {
+        console.log('added to sale!')
+      })
+      .catch((error: { message: string}) => {
+        console.log(`error! ${error.message}`)
+      });
+    setSellForm(false);
+    setSelectedArt(null);
+  }
+
   const handleLoginViewClick = () => {
     setLoginView(true);
     setFormVisibleOnPage(false);
@@ -98,6 +142,7 @@ function AdminControl() {
     setFormVisibleOnPage(false);
     setSelectedArt(null);
     setEditing(false);
+    setSellForm(false)
   }
 
   const handleLogoutViewClick = () => {
@@ -107,6 +152,7 @@ function AdminControl() {
     setFormVisibleOnPage(false);
     setSelectedArt(null);
     setEditing(false);
+    setSellForm(false)
   }
 
   const handleViewQueueClick = () => {
@@ -116,6 +162,7 @@ function AdminControl() {
     setFormVisibleOnPage(false);
     setSelectedArt(null);
     setEditing(false);
+    setSellForm(false)
   }
 
   const handleAddArtClick = () => {
@@ -125,6 +172,7 @@ function AdminControl() {
     setFormVisibleOnPage(true);
     setSelectedArt(null);
     setEditing(false);
+    setSellForm(false)
   }
 
   const handleViewAllArtClick = () => {
@@ -134,6 +182,7 @@ function AdminControl() {
     setFormVisibleOnPage(false);
     setSelectedArt(null);
     setEditing(false);
+    setSellForm(false)
   }
 
   const handleViewEditingClick = () => {
@@ -142,6 +191,16 @@ function AdminControl() {
     setLogoutView(false);
     setFormVisibleOnPage(false);
     setEditing(true);
+    setSellForm(false)
+  }
+
+  const handleSellArtViewClick = () => {
+    setLoginView(false);
+    setFormVisibleOnPage(false);
+    setLogoutView(false);
+    setFormVisibleOnPage(false);
+    setEditing(false);
+    setSellForm(true);
   }
 
 
@@ -175,12 +234,18 @@ function AdminControl() {
         <ArtQueueForm 
           addSomeArt={handleAddArtSubmit}
            />
+    } else if (sellForm) {
+      currentView = 
+        <SellArtForm 
+          selection={selectedArt} 
+          sellArt={handleSubmitArtSale} />
     } else if (selectedArt != null) {
       currentView = 
         <ArtDetails 
           selection={selectedArt} 
           deleteArt={handleDeleteArtClick}
-          editArt={handleViewEditingClick} />
+          editArt={handleViewEditingClick} 
+          sellArt={handleSellArtViewClick} />
     } else {
         currentView = 
           <AllArtList 
