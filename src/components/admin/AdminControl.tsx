@@ -31,6 +31,7 @@ function AdminControl() {
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [artList, setArtList] = useState<ArtObj[]>([]);
   const [selectedArt, setSelectedArt] = useState<ArtObj | null>(null);
+  const [countDownDate, setCountDownDate] = useState<number | null>(null);
   const [forSale, setForSale] = useState<SaleObj | null>(null);
   const [loginView, setLoginView] = useState(false);
   const [logoutView, setLogoutView] = useState(false);
@@ -61,17 +62,22 @@ function AdminControl() {
   }, []);
 
   useEffect(() => {
-    const artdb = ref(db, 'sell/');
+    const artdb = ref(db, "sell/");
     const unSubscribe = onValue(
-      artdb, (snapshot: import("firebase/database").DataSnapshot) => {
-      const data = snapshot.val() as Record<string, SaleObj>;
-      const index = Object.keys(data);
-      const saleItem = data[index[0]]
-      setForSale(saleItem)
-    },
-    (error) => {
-      console.log(error);
-    });
+      artdb,
+      (snapshot: import("firebase/database").DataSnapshot) => {
+        const data = snapshot.val() as Record<string, SaleObj>;
+        const index = Object.keys(data);
+        const saleItem = data[index[0]];
+        setForSale(saleItem);
+        const dateData = saleItem.closeDate;
+        const jsDate = new Date(dateData);
+        setCountDownDate(jsDate.getTime());
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
     return () => unSubscribe();
   }, []);
 
@@ -250,7 +256,8 @@ function AdminControl() {
         currentView = 
           <AllArtList 
             allArt={artList} 
-            // forSale={forSale}
+            forSale={forSale}
+            countdown={countDownDate}
             onArtClick={handleSelectArtClick} 
             onAddArtClick={handleAddArtClick} />
       }
