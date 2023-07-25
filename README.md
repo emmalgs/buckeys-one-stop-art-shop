@@ -65,7 +65,13 @@
 * _Plan for today:_
   * Implement timer and start button in queue
   * Connect frontend to queue collection, display timer
-  * Timer
-    1. Universal timer that admin sets.
-    2. Start and stop button on the queue
-    3. 
+  * Timer thoughts:
+    1. Universal timer that admin sets at the edit queue page.
+    2. Start, stop, and reset button next to the timer.
+    3. Queue order can be editted, admin can see which item is currently displayed
+    4. Start button has recursive function that sets the interval to one second, resets timer to predetermined amount when it runs out and moves to next queue item
+    5. useEffect updates frontend state
+  * Other version:
+    1. Universal timer in the db
+    2. Function that runs the timer on admin start
+    3. SetTimeout, loop through queue array, current index pushes to frontend display
