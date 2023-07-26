@@ -5,9 +5,8 @@ interface HeaderProps {
 function Header(props: HeaderProps) {
   return(
     <div className="header">
-      <button>What?</button>
+      {/* <button>What?</button> */}
       <h1 onClick={props.mainView}>Buckey's One Stop Art Shop</h1>
-      <button onClick={props.cartView}>Cart</button>
     </div>
   )
 }
