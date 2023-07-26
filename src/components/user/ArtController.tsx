@@ -13,6 +13,7 @@ function ArtController() {
   const [countDownDate, setCountDownDate] = useState<number | null>(null);
   const [cart, setCart] = useState<SaleObj[]>([])
   const [cartTotal, setCartTotal] = useState<number>(0);
+  const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
     const artdb = ref(db, 'sell/');
@@ -33,26 +34,41 @@ function ArtController() {
   }, []);
 
   const handleAddToCart = (art: SaleObj) => {
+    if (!cart.includes(art)) {
     const updateCart = cart.concat(art);
     setCart(updateCart);
     const price = art.price;
     setCartTotal(prevState => prevState + parseInt(price))
+    setMessage(`${art.title} added to your cart!`)
+    } else {
+      setMessage('You already have this item in your cart!')
+    }
+  }
+
+  const handleDeleteFromCart = (art: SaleObj) => {
+    const updateCart = cart.filter((item) => item.id !== art.id)
+    setCart(updateCart);
+    const price = art.price;
+    setCartTotal(prevState => prevState - parseInt(price))
   }
 
   const handleCartClick = () => {
     setCartVisible(true);
     setHomeVisible(false);
+    setMessage('');
   }
 
   const handleHomeClick = () => {
     setHomeVisible(true);
     setCartVisible(false);
+    setMessage('');
   }
   let currentlyVisible = null;
   if (cartVisible) {
     currentlyVisible = <Cart 
       cartItems={cart}
-      total={cartTotal} />;
+      total={cartTotal} 
+      delete={handleDeleteFromCart} />;
   } else if (homeVisible) {
     currentlyVisible = 
       <Art 
@@ -63,6 +79,7 @@ function ArtController() {
   return (
     <div>
       <Header mainView={handleHomeClick} cartView={handleCartClick} />
+      <p>{message}</p>
       {currentlyVisible}
     </div>
   );
