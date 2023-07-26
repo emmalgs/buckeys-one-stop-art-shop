@@ -71,8 +71,8 @@ function AllArtList(props: ArtProps) {
           </tr>
           {props.allArt.map((art) => {
             return (
-              <tr key={art.id} className="art-list-item">
-                <td id={art.id} onClick={() => props.onArtClick(art.id)}>
+              <tr key={art.id} className="art-list-item" onClick={() => props.onArtClick(art.id)}>
+                <td id={art.id} >
                   {art.title}
                 </td>
                 <td>{art.description}</td>

@@ -149,8 +149,7 @@ button.buy:hover {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 80%;
-  margin: auto;
+  padding-right: 3em;
 }
 
 .art-list-item {
@@ -193,10 +192,10 @@ td {
 /* \/\/\/\/\/\/ ADMIN DETAILS \/\/\/\/\/ */
 
 .art-details {
-  background-color: pink;
-  padding: 20px;
-  width: 50%;
-  margin: auto;
+  grid-area: 2 / 3 / 8 / 5;
+
+  background-color: var(--light);
+  padding: 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -206,4 +205,63 @@ td {
   display: flex;
   gap: 20px;
   justify-content: center;
+}
+
+/* ADMIN ADD ART FORM */
+
+.add-art-form {
+  grid-area: 3 / 3 / 8 / 5;
+
+  background-color: var(--blue);
+  padding: 2em;
+}
+
+.exit {
+  text-align: right;
+  cursor: pointer;
+}
+
+.add-art-form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.add-art-form label {
+  align-self: flex-start;
+  margin-bottom: -14px;
+  color: var(--light);
+}
+
+.add-art-form input {
+  align-self: stretch;
+  line-height: 2em;
+}
+
+/* ADMIN ART TO SELL FORM */
+
+.sell-art-form {
+  grid-area: 2 / 2 / 11 / 6;
+
+  background-color: var(--blue);
+  padding: 2em;
+  margin: 0 5em 0 5em;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.date-select form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.date-select form input {
+  line-height: 2em;
+}
+
+.date-select form button {
+  align-self: center;
 }

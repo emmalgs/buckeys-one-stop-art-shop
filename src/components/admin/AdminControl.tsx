@@ -239,6 +239,7 @@ function AdminControl() {
       currentView = 
         <ArtQueueForm 
           addSomeArt={handleAddArtSubmit}
+          back={handleViewAllArtClick}
            />
     } else if (sellForm) {
       currentView = 
