@@ -6,14 +6,22 @@ import { SaleObj } from "../admin/AdminControl";
 interface ArtProps {
   art: SaleObj
   countdown: number
+  buyClick: (art: SaleObj) => void;
 }
 
 function Art(props: ArtProps) {
   return (
     <div className="art">
-      <ArtInfo title={props.art.title} description={props.art.description} price={props.art.price} />
+      <ArtInfo 
+        title={props.art.title} 
+        description={props.art.description} 
+        price={props.art.price} 
+        />
       <ArtImage image={props.art.imageUrl}/>
-      <Timer timer={props.countdown}/>
+      <Timer 
+        timer={props.countdown}
+        buyArt={props.buyClick} 
+        selection={props.art} />
     </div>
   )
 }
