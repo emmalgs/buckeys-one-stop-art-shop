@@ -4,12 +4,14 @@ interface CartProps {
   cartItems: Array<SaleObj>;
   total: number;
   delete: (art: SaleObj) => void;
+  exit: () => void;
 }
 
 function Cart(props: CartProps) {
   return (
     <div className="cart-main">
-      <h1>Cart</h1>
+      <h1>Cart </h1>
+      <span className="cart-exit" onClick={props.exit}>&#215;</span>
       <div className="line1"></div>
       {props.cartItems.length === 0 ? (
         <p className="cart-item">Nothing in here!</p>
