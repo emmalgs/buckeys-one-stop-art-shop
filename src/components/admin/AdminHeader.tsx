@@ -3,7 +3,6 @@ import { auth } from '../../firebase'
 interface HeaderProps {
   loginClick: () => void;
   logoutViewClick: () => void;
-  viewAllArtClick: () => void;
 }
 
 function AdminHeader(props: HeaderProps) {
