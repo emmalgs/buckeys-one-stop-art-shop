@@ -95,6 +95,7 @@ function AdminControl() {
   const handleSelectArtClick = (id: string) => {
     const selection = artList.filter((artwork) => artwork.id === id)[0]
     setSelectedArt(selection);
+    setEditing(false);
   }
 
   const handleDeleteArtClick = (id: string) => {
@@ -234,7 +235,8 @@ function AdminControl() {
       currentView = 
         <EditArtForm
           artwork={selectedArt}
-          updateArt={handleEditArtSubmit} /> 
+          updateArt={handleEditArtSubmit} 
+          backToArt={handleSelectArtClick} /> 
     } else if (formVisibleOnPage) {
       currentView = 
         <ArtQueueForm 

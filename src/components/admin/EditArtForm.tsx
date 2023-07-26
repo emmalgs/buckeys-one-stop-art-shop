@@ -2,6 +2,7 @@ import { ArtObj } from "./AdminControl";
 
 interface FormProps {
   updateArt: (artwork: ArtObj) => void;
+  backToArt: (id: string) => void;
   artwork: ArtObj;
 }
 
@@ -25,19 +26,24 @@ function EditArtForm(props: FormProps) {
   };
 
   return (
-    <div>
+    <div className="edit-art">
+      <p className="exit" onClick={() => props.backToArt(props.artwork.id)}>x</p>
+      <h3>Editing {props.artwork.title}</h3>
       <form onSubmit={updateArtOnSubmit}>
+        <label>Title</label>
         <input
           type="text"
           name="title"
           placeholder="title"
           defaultValue={props.artwork.title}
         />
-        <textarea
+        <label>Description</label>
+        <input type="text"
           name="description"
           placeholder="description of art piece"
           defaultValue={props.artwork.description}
         />
+        <label>Price</label>
         <input
           type="number"
           name="price"
