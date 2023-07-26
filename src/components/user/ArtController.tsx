@@ -9,7 +9,7 @@ import { SaleObj } from "../admin/AdminControl";
 function ArtController() {
   const [cartVisible, setCartVisible] = useState<boolean>(false);
   const [homeVisible, setHomeVisible] = useState<boolean>(true);
-  const [currentArt, setCurrentArt] = useState({});
+  const [currentArt, setCurrentArt] = useState<SaleObj | null>(null);
   const [countDownDate, setCountDownDate] = useState<number | null>(null);
   const [cart, setCart] = useState<SaleObj[]>([])
   const [cartTotal, setCartTotal] = useState<number>(0);

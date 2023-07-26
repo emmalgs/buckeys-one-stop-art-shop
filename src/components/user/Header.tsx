@@ -1,5 +1,4 @@
 interface HeaderProps {
-  cartView: () => void;
   mainView: () => void;
 }
 function Header(props: HeaderProps) {
