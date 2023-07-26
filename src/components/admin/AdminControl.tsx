@@ -14,6 +14,8 @@ export interface ArtObj {
   title: string;
   description: string;
   price: string;
+  quantity: string;
+  available: string;
   imageUrl: string;
   id: string;
 }
@@ -37,6 +39,7 @@ function AdminControl() {
   const [logoutView, setLogoutView] = useState(false);
   const [editing, setEditing] = useState(false);
   const [sellForm, setSellForm] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     const artdb = ref(db, 'art/');
@@ -53,10 +56,9 @@ function AdminControl() {
         artworks.push(artwork);
       });
       setArtList(artworks)
-      console.log(artworks)
     },
     (error) => {
-      console.log(error);
+      setSuccessMessage(error.message);
     });
     return () => unSubscribe();
   }, []);
@@ -75,7 +77,7 @@ function AdminControl() {
         setCountDownDate(jsDate.getTime());
       },
       (error) => {
-        console.log(error);
+        setSuccessMessage(error.message);
       }
     );
     return () => unSubscribe();
@@ -85,10 +87,13 @@ function AdminControl() {
     const newDataRef = push(ref(db, 'art'));
     set(newDataRef, artwork)
     .then(() => {
-      console.log('added it!');
+      setSuccessMessage('Added!');
+      clearMessage();
+      handleViewAllArtClick();
     })
     .catch((error: { message: string} ) => {
-      console.log(`error! ${error.message}`)
+      setSuccessMessage(error.message);
+      clearMessage();
     })
   }
 
@@ -102,10 +107,12 @@ function AdminControl() {
     const dataRef = ref(db, `art/${id}`);
     set(dataRef, null)
       .then(() => {
-        console.log('deleted!');
+        setSuccessMessage('Deleted!')
+        clearMessage();
       })
       .catch((error: { message: string}) => {
-        console.log(`error! ${error.message}`)
+        setSuccessMessage(error.message)
+        clearMessage();
       });
     setTimeout(() => {
       handleViewQueueClick()
@@ -116,10 +123,12 @@ function AdminControl() {
     const dataRef = ref(db, `art/${artwork.id}`);
     update(dataRef, artwork)
       .then(() => {
-        console.log('updated!');
+        setSuccessMessage('Updated!')
+        clearMessage()
       })
       .catch((error: { message: string}) => {
-        console.log(`error! ${error.message}`)
+        setSuccessMessage(error.message);
+        clearMessage();
       });
     setEditing(false);
     setSelectedArt(null);
@@ -133,13 +142,21 @@ function AdminControl() {
     }
     set(newDataRef, sellArt)
       .then(() => {
-        console.log('added to sale!')
+        setSuccessMessage('Added To Sale!');
+        clearMessage();
       })
       .catch((error: { message: string}) => {
-        console.log(`error! ${error.message}`)
+        setSuccessMessage(error.message);
+        clearMessage();
       });
     setSellForm(false);
     setSelectedArt(null);
+  }
+
+  const clearMessage = () => {
+    setTimeout(() => {
+      setSuccessMessage('')
+    }, 5000)
   }
 
   const handleLoginViewClick = () => {
@@ -270,6 +287,7 @@ function AdminControl() {
         <AdminHeader 
           loginClick={handleLoginViewClick}
           logoutViewClick={handleLogoutViewClick} />
+      <p className='success-msg'>{successMessage}</p>
         {currentView}
       </div>
     )
