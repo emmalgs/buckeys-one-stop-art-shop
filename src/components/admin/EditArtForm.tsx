@@ -42,12 +42,16 @@ function EditArtForm(props: FormProps) {
       title: { value: string };
       description: { value: string };
       price: { value: string };
+      quantity: { value: string };
+      available: { value: string };
     };
 
     const art = {
       title: target.title.value,
       description: target.description.value,
       price: target.price.value,
+      quantity: target.quantity.value,
+      available: target.available.value,
       imageUrl: imageURL,
       id: props.artwork.id,
     };
@@ -61,11 +65,10 @@ function EditArtForm(props: FormProps) {
 
   return (
     <div className="edit-art">
-      <p className="exit" onClick={() => props.backToArt(props.artwork.id)}>
-        x
-      </p>
       <p>{updateSuccess}</p>
-      <h3>Editing {props.artwork.title}</h3>
+      <p className="exit" onClick={() => props.backToArt(props.artwork.id)}>
+        &#215;
+      </p>
       <form onSubmit={updateArtOnSubmit}>
         <label>Title</label>
         <input
@@ -88,7 +91,21 @@ function EditArtForm(props: FormProps) {
           placeholder="price"
           defaultValue={props.artwork.price}
         />
-
+        <label htmlFor="quantity">Quantity</label>
+        <input
+          type="number"
+          name="quantity"
+          id="quantity"
+          placeholder="quantity"
+          defaultValue={props.artwork.quantity}
+        />
+        <div className="drop-down">
+          <label htmlFor="available">Available</label>
+          <select name="available" id="available">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
         {imageURL != null ? (
           <>
             <label>Image</label>

@@ -3,6 +3,7 @@ import ArtImage from "./ArtImage";
 import Timer from "./Timer";
 import { SaleObj } from "../admin/AdminControl";
 
+
 interface ArtProps {
   art: SaleObj | null;
   countdown: number | null;
