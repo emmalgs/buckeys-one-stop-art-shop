@@ -6,19 +6,13 @@ import { ref, onValue } from "firebase/database";
 import {db} from "../../firebase";
 import { SaleObj } from "../admin/AdminControl";
 
-interface ArtObj {
-  title: string;
-  description: string;
-  price: string;
-  imageUrl: string;
-  available: boolean;
-}
-
 function ArtController() {
   const [cartVisible, setCartVisible] = useState<boolean>(false);
   const [homeVisible, setHomeVisible] = useState<boolean>(true);
   const [currentArt, setCurrentArt] = useState({});
   const [countDownDate, setCountDownDate] = useState<number | null>(null);
+  const [cart, setCart] = useState<SaleObj[]>([])
+  const [cartTotal, setCartTotal] = useState<number>(0);
 
   useEffect(() => {
     const artdb = ref(db, 'sell/');
@@ -38,7 +32,14 @@ function ArtController() {
     return () => unSubscribe();
   }, []);
 
-  const handleBuyClick = () => {
+  const handleAddToCart = (art: SaleObj) => {
+    const updateCart = cart.concat(art);
+    setCart(updateCart);
+    const price = art.price;
+    setCartTotal(prevState => prevState + parseInt(price))
+  }
+
+  const handleCartClick = () => {
     setCartVisible(true);
     setHomeVisible(false);
   }
@@ -49,13 +50,19 @@ function ArtController() {
   }
   let currentlyVisible = null;
   if (cartVisible) {
-    currentlyVisible = <Cart />;
+    currentlyVisible = <Cart 
+      cartItems={cart}
+      total={cartTotal} />;
   } else if (homeVisible) {
-    currentlyVisible = <Art art={currentArt} countdown={countDownDate}/>;
+    currentlyVisible = 
+      <Art 
+        art={currentArt} 
+        countdown={countDownDate}
+        buyClick={handleAddToCart} />;
   }
   return (
     <div>
-      <Header mainView={handleHomeClick} cartView={handleBuyClick} />
+      <Header mainView={handleHomeClick} cartView={handleCartClick} />
       {currentlyVisible}
     </div>
   );
