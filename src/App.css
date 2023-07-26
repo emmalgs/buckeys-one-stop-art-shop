@@ -100,6 +100,8 @@ button.buy:hover {
   grid-area: 1 / 1 / 2 / 7;
 }
 
+/* /\/\/\/\/\/\/ ADMIN MAIN \/\/\/\/\/\/\/ */
+
 .admin-main {
   grid-area: 2 / 1 / 11 / 7;
 
@@ -152,15 +154,43 @@ button.buy:hover {
 }
 
 .art-list-item {
-  display: flex;
-  justify-content: space-evenly;
-  background-color: pink;
+  background-color: var(--light);
+  padding: 1em;
 }
 
 .art-list-item:hover {
-  background-color: lightcyan;
+  background-color: var(--blue);
+  color: var(--light);
   cursor: pointer;
 }
+
+th {
+  background-color: var(--gold);
+}
+
+td {
+  padding: .7em;
+  width: 25%;
+}
+
+.art-list-item img {
+  height: 120px;
+  width: auto;
+  margin: auto;
+}
+
+.add-art-btn {
+  align-self: center;
+  background-color: var(--green);
+  color: var(--light);
+}
+
+.add-art-btn:hover {
+  background-color: var(--blue);
+}
+
+/* ^^^^^^^^^^^ ADMIN MAIN ^^^^^^^^^^^^ */
+/* \/\/\/\/\/\/ ADMIN DETAILS \/\/\/\/\/ */
 
 .art-details {
   background-color: pink;

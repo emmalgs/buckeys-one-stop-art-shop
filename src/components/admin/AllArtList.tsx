@@ -61,28 +61,30 @@ function AllArtList(props: ArtProps) {
       </div>
 
       <div className="all-art-list">
-        {props.allArt.map((art) => {
-          return (
-            <div
-              key={art.id}
-              className="art-list-item"
-              id={art.id}
-              onClick={() => props.onArtClick(art.id)}
-            >
-              <p>
-                Title: <em>{art.title}</em>
-              </p>
-              <p>
-                Description: <em>{art.description}</em>
-              </p>
-              <p>Price : ${parseInt(art.price).toFixed(2)}</p>
-              <p>
-                <img src={art.imageUrl} />
-              </p>
-            </div>
-          );
-        })}
-        <button onClick={props.onAddArtClick}>+</button>
+      <button onClick={props.onAddArtClick} className="add-art-btn">Add Art</button>
+        <table>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Image</th>
+          </tr>
+          {props.allArt.map((art) => {
+            return (
+              <tr key={art.id} className="art-list-item">
+                <td id={art.id} onClick={() => props.onArtClick(art.id)}>
+                  {art.title}
+                </td>
+                <td>{art.description}</td>
+                <td>${parseInt(art.price).toFixed(2)}</td>
+                <td>
+                  <img src={art.imageUrl} />
+                </td>
+              </tr>
+            );
+          })}
+        </table>
+        
       </div>
     </div>
   );
