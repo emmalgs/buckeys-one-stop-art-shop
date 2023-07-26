@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { ref, onValue, push, set, update } from "firebase/database";
 import { db, auth } from "../../firebase";
-import AdminLogin from './AdminLogin';
-import ArtQueueForm from './AddArtForm';
-import AdminHeader from './AdminHeader';
-import AdminLogout from './AdminLogout';
-import ArtDetails from './ArtDetails';
-import AllArtList from './AllArtList';
-import EditArtForm from './EditArtForm';
-import SellArtForm from './SellArtForm';
+import AdminLogin from "./AdminLogin";
+import ArtQueueForm from "./AddArtForm";
+import AdminHeader from "./AdminHeader";
+import AdminLogout from "./AdminLogout";
+import ArtDetails from "./ArtDetails";
+import AllArtList from "./AllArtList";
+import EditArtForm from "./EditArtForm";
+import SellArtForm from "./SellArtForm";
 
 export interface ArtObj {
   title: string;
@@ -17,16 +17,9 @@ export interface ArtObj {
   quantity: string;
   available: string;
   imageUrl: string;
+  forSale?: boolean;
+  closeDate?: Date;
   id: string;
-}
-
-export interface SaleObj {
-  title: string;
-  description: string;
-  price: string;
-  imageUrl: string;
-  id: string;
-  closeDate: Date;
 }
 
 function AdminControl() {
@@ -34,45 +27,32 @@ function AdminControl() {
   const [artList, setArtList] = useState<ArtObj[]>([]);
   const [selectedArt, setSelectedArt] = useState<ArtObj | null>(null);
   const [countDownDate, setCountDownDate] = useState<number | null>(null);
-  const [forSale, setForSale] = useState<SaleObj | null>(null);
+  const [forSale, setForSale] = useState<ArtObj | null>(null);
   const [loginView, setLoginView] = useState(false);
   const [logoutView, setLogoutView] = useState(false);
   const [editing, setEditing] = useState(false);
   const [sellForm, setSellForm] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    const artdb = ref(db, 'art/');
-    const unSubscribe = onValue(
-      artdb, (snapshot: import("firebase/database").DataSnapshot) => {
-      const artworks: ArtObj[] = [];
-      const data = snapshot.val() as Record<string, ArtObj>;
-      const keys = Object.keys(data)
-      keys.forEach((art, index) => {
-        const artwork = {
-          ...data[art],
-          id: keys[index]
-        }
-        artworks.push(artwork);
-      });
-      setArtList(artworks)
-    },
-    (error) => {
-      setSuccessMessage(error.message);
-    });
-    return () => unSubscribe();
-  }, []);
-
-  useEffect(() => {
-    const artdb = ref(db, "sell/");
+    const artdb = ref(db, "art/");
     const unSubscribe = onValue(
       artdb,
       (snapshot: import("firebase/database").DataSnapshot) => {
-        const data = snapshot.val() as Record<string, SaleObj>;
-        const index = Object.keys(data);
-        const saleItem = data[index[0]];
-        setForSale(saleItem);
-        const dateData = saleItem.closeDate;
+        const artworks: ArtObj[] = [];
+        const data = snapshot.val() as Record<string, ArtObj>;
+        const keys = Object.keys(data);
+        keys.forEach((art, index) => {
+          const artwork = {
+            ...data[art],
+            id: keys[index],
+          };
+          artworks.push(artwork);
+        });
+        setArtList(artworks);
+        const artOnSale = artworks.filter((art) => art.forSale === true);
+        setForSale(artOnSale[0]);
+        const dateData = artOnSale[0].closeDate;
         const jsDate = new Date(dateData);
         setCountDownDate(jsDate.getTime());
       },
@@ -84,80 +64,86 @@ function AdminControl() {
   }, []);
 
   const handleAddArtSubmit = (artwork: ArtObj) => {
-    const newDataRef = push(ref(db, 'art'));
+    const newDataRef = push(ref(db, "art"));
     set(newDataRef, artwork)
-    .then(() => {
-      setSuccessMessage('Added!');
-      clearMessage();
-      handleViewAllArtClick();
-    })
-    .catch((error: { message: string} ) => {
-      setSuccessMessage(error.message);
-      clearMessage();
-    })
-  }
+      .then(() => {
+        setSuccessMessage("Added!");
+        clearMessage();
+        handleViewAllArtClick();
+      })
+      .catch((error: { message: string }) => {
+        setSuccessMessage(error.message);
+        clearMessage();
+      });
+  };
 
   const handleSelectArtClick = (id: string) => {
-    const selection = artList.filter((artwork) => artwork.id === id)[0]
+    const selection = artList.filter((artwork) => artwork.id === id)[0];
     setSelectedArt(selection);
     setEditing(false);
-  }
+  };
 
   const handleDeleteArtClick = (id: string) => {
     const dataRef = ref(db, `art/${id}`);
     set(dataRef, null)
       .then(() => {
-        setSuccessMessage('Deleted!')
+        setSuccessMessage("Deleted!");
         clearMessage();
       })
-      .catch((error: { message: string}) => {
-        setSuccessMessage(error.message)
+      .catch((error: { message: string }) => {
+        setSuccessMessage(error.message);
         clearMessage();
       });
     setTimeout(() => {
-      handleViewQueueClick()
+      handleViewQueueClick();
     }, 1000);
-  }
+  };
 
   const handleEditArtSubmit = (artwork: ArtObj) => {
     const dataRef = ref(db, `art/${artwork.id}`);
     update(dataRef, artwork)
       .then(() => {
-        setSuccessMessage('Updated!')
-        clearMessage()
+        setSuccessMessage("Updated!");
+        clearMessage();
       })
-      .catch((error: { message: string}) => {
+      .catch((error: { message: string }) => {
         setSuccessMessage(error.message);
         clearMessage();
       });
     setEditing(false);
     setSelectedArt(null);
-  }
+  };
 
   const handleSubmitArtSale = (artwork: ArtObj, date: Date) => {
-    const newDataRef = push(ref(db, 'sell'));
-    const sellArt = { 
-      ...artwork,
-      closeDate: date
+    if (forSale !== null) {
+      const replacement = artList.filter((art) => art === forSale)[0];
+      replacement.forSale = false;
+      handleEditArtSubmit(replacement);
     }
-    set(newDataRef, sellArt)
+    const newDataRef = ref(db, `art/${artwork.id}`);
+    const sellArt = {
+      ...artwork,
+      closeDate: date,
+      forSale: true,
+    };
+    update(newDataRef, sellArt)
       .then(() => {
-        setSuccessMessage('Added To Sale!');
+        setSuccessMessage("Added To Sale!");
         clearMessage();
       })
-      .catch((error: { message: string}) => {
+      .catch((error: { message: string }) => {
         setSuccessMessage(error.message);
         clearMessage();
       });
     setSellForm(false);
     setSelectedArt(null);
-  }
+  };
 
   const clearMessage = () => {
     setTimeout(() => {
-      setSuccessMessage('')
-    }, 5000)
-  }
+      setSuccessMessage("");
+    }, 5000);
+  };
 
   const handleLoginViewClick = () => {
     setLoginView(true);
@@ -166,8 +152,8 @@ function AdminControl() {
     setFormVisibleOnPage(false);
     setSelectedArt(null);
     setEditing(false);
-    setSellForm(false)
-  }
+    setSellForm(false);
+  };
 
   const handleLogoutViewClick = () => {
     setLoginView(false);
@@ -176,8 +162,8 @@ function AdminControl() {
     setFormVisibleOnPage(false);
     setSelectedArt(null);
     setEditing(false);
-    setSellForm(false)
-  }
+    setSellForm(false);
+  };
 
   const handleViewQueueClick = () => {
     setLoginView(false);
@@ -186,8 +172,8 @@ function AdminControl() {
     setFormVisibleOnPage(false);
     setSelectedArt(null);
     setEditing(false);
-    setSellForm(false)
-  }
+    setSellForm(false);
+  };
 
   const handleAddArtClick = () => {
     setLoginView(false);
@@ -196,8 +182,8 @@ function AdminControl() {
     setFormVisibleOnPage(true);
     setSelectedArt(null);
     setEditing(false);
-    setSellForm(false)
-  }
+    setSellForm(false);
+  };
 
   const handleViewAllArtClick = () => {
     setLoginView(false);
@@ -206,8 +192,8 @@ function AdminControl() {
     setFormVisibleOnPage(false);
     setSelectedArt(null);
     setEditing(false);
-    setSellForm(false)
-  }
+    setSellForm(false);
+  };
 
   const handleViewEditingClick = () => {
     setLoginView(false);
@@ -215,8 +201,8 @@ function AdminControl() {
     setLogoutView(false);
     setFormVisibleOnPage(false);
     setEditing(true);
-    setSellForm(false)
-  }
+    setSellForm(false);
+  };
 
   const handleSellArtViewClick = () => {
     setLoginView(false);
@@ -225,72 +211,82 @@ function AdminControl() {
     setFormVisibleOnPage(false);
     setEditing(false);
     setSellForm(true);
-  }
-
+  };
 
   if (auth.currentUser == null) {
     let currentView = null;
     if (loginView) {
-      currentView = <AdminLogin />
+      currentView = <AdminLogin />;
     } else {
-      currentView = <p>Please login to your admin account</p>
+      currentView = <p>Please login to your admin account</p>;
     }
     return (
-      <div className='admin-body'>
-        <AdminHeader 
-          loginClick={handleLoginViewClick} 
-          logoutViewClick={handleLogoutViewClick} />
+      <div className="admin-body">
+        <AdminHeader
+          loginClick={handleLoginViewClick}
+          logoutViewClick={handleLogoutViewClick}
+        />
         {currentView}
       </div>
-    )
+    );
   } else if (auth.currentUser != null) {
     let currentView = null;
     if (logoutView) {
-      currentView = <AdminLogout />
+      currentView = <AdminLogout />;
     } else if (editing) {
-      currentView = 
+      currentView = (
         <EditArtForm
           artwork={selectedArt}
-          updateArt={handleEditArtSubmit} 
-          backToArt={handleSelectArtClick} /> 
+          updateArt={handleEditArtSubmit}
+          backToArt={handleSelectArtClick}
+        />
+      );
     } else if (formVisibleOnPage) {
-      currentView = 
-        <ArtQueueForm 
+      currentView = (
+        <ArtQueueForm
           addSomeArt={handleAddArtSubmit}
           back={handleViewAllArtClick}
-           />
+        />
+      );
     } else if (sellForm) {
-      currentView = 
-        <SellArtForm 
-          selection={selectedArt} 
+      currentView = (
+        <SellArtForm
+          selection={selectedArt}
           sellArt={handleSubmitArtSale}
-          back={handleViewAllArtClick} />
+          back={handleViewAllArtClick}
+        />
+      );
     } else if (selectedArt != null) {
-      currentView = 
-        <ArtDetails 
-          selection={selectedArt} 
+      currentView = (
+        <ArtDetails
+          selection={selectedArt}
           deleteArt={handleDeleteArtClick}
-          editArt={handleViewEditingClick} 
+          editArt={handleViewEditingClick}
           sellArt={handleSellArtViewClick}
-          back={handleViewAllArtClick} />
+          back={handleViewAllArtClick}
+        />
+      );
     } else {
-        currentView = 
-          <AllArtList 
-            allArt={artList} 
-            forSale={forSale}
-            countdown={countDownDate}
-            onArtClick={handleSelectArtClick} 
-            onAddArtClick={handleAddArtClick} />
-      }
+      currentView = (
+        <AllArtList
+          allArt={artList}
+          forSale={forSale}
+          countdown={countDownDate}
+          onArtClick={handleSelectArtClick}
+          onAddArtClick={handleAddArtClick}
+        />
+      );
+    }
     return (
-      <div className='admin-body'>
-        <AdminHeader 
+      <div className="admin-body">
+        <AdminHeader
           loginClick={handleLoginViewClick}
-          logoutViewClick={handleLogoutViewClick} />
-      <p className='success-msg'>{successMessage}</p>
+          logoutViewClick={handleLogoutViewClick}
+        />
+        <p className="success-msg">{successMessage}</p>
         {currentView}
       </div>
-    )
+    );
   }
 }
 

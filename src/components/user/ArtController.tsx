@@ -4,36 +4,46 @@ import Header from "./Header";
 import { useState, useEffect } from "react";
 import { ref, onValue } from "firebase/database";
 import {db} from "../../firebase";
-import { SaleObj } from "../admin/AdminControl";
+import { ArtObj } from "../admin/AdminControl";
 
 function ArtController() {
   const [cartVisible, setCartVisible] = useState<boolean>(false);
   const [homeVisible, setHomeVisible] = useState<boolean>(true);
-  const [currentArt, setCurrentArt] = useState<SaleObj | null>(null);
+  const [currentArt, setCurrentArt] = useState<ArtObj | null>(null);
   const [countDownDate, setCountDownDate] = useState<number | null>(null);
-  const [cart, setCart] = useState<SaleObj[]>([])
+  const [cart, setCart] = useState<ArtObj[]>([])
   const [cartTotal, setCartTotal] = useState<number>(0);
   const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
-    const artdb = ref(db, 'sell/');
+    const artdb = ref(db, "art/");
     const unSubscribe = onValue(
-      artdb, (snapshot: import("firebase/database").DataSnapshot) => {
-      const data = snapshot.val() as Record<string, SaleObj>;
-      const index = Object.keys(data)
-      const saleItem = data[index[0]]
-      setCurrentArt(saleItem)
-      const dateData = saleItem.closeDate;
-      const jsDate = new Date(dateData);
-      setCountDownDate(jsDate.getTime())
-    },
-    (error) => {
-      console.log(error);
-    });
+      artdb,
+      (snapshot: import("firebase/database").DataSnapshot) => {
+        const artworks: ArtObj[] = [];
+        const data = snapshot.val() as Record<string, ArtObj>;
+        const keys = Object.keys(data);
+        keys.forEach((art, index) => {
+          const artwork = {
+            ...data[art],
+            id: keys[index],
+          };
+          artworks.push(artwork);
+        });
+        const artOnSale = artworks.filter((art) => art.forSale === true);
+        setCurrentArt(artOnSale[0]);
+        const dateData = artOnSale[0].closeDate;
+        const jsDate = new Date(dateData);
+        setCountDownDate(jsDate.getTime());
+      },
+      (error) => {
+        setMessage(error.message);
+      }
+    );
     return () => unSubscribe();
   }, []);
 
-  const handleAddToCart = (art: SaleObj) => {
+  const handleAddToCart = (art: ArtObj) => {
     if (!cart.includes(art)) {
     const updateCart = cart.concat(art);
     setCart(updateCart);
@@ -47,7 +57,7 @@ function ArtController() {
     }
   }
 
-  const handleDeleteFromCart = (art: SaleObj) => {
+  const handleDeleteFromCart = (art: ArtObj) => {
     const updateCart = cart.filter((item) => item.id !== art.id)
     setCart(updateCart);
     const price = art.price;
