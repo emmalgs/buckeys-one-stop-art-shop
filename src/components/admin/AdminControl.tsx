@@ -252,7 +252,8 @@ function AdminControl() {
           selection={selectedArt} 
           deleteArt={handleDeleteArtClick}
           editArt={handleViewEditingClick} 
-          sellArt={handleSellArtViewClick} />
+          sellArt={handleSellArtViewClick}
+          back={handleViewAllArtClick} />
     } else {
         currentView = 
           <AllArtList 

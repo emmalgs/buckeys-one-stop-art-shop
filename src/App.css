@@ -195,10 +195,19 @@ td {
   grid-area: 2 / 3 / 8 / 5;
 
   background-color: var(--light);
-  padding: 2em;
+  margin-top: 2em;
+  padding: 1.2em;
+  height: 100%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.art-details .exit {
+  align-self: flex-end;
+  padding: 0;
+  margin: 0;
 }
 
 .art-btns {

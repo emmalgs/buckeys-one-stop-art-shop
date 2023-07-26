@@ -5,12 +5,14 @@ interface DetailProps {
   deleteArt: (id: string) => void;
   editArt: () => void;
   sellArt: () => void;
+  back: () => void;
 }
 
 function ArtDetails(props: DetailProps) {
   const art: ArtObj = props.selection;
   return (
     <div className="art-details">
+      <p className="exit" onClick={props.back}>x</p>
       <h2>{art.title}</h2>
       <p>{art.description}</p>
       <p>${parseInt(art.price).toFixed(2)}</p>
