@@ -40,8 +40,10 @@ function ArtController() {
     const price = art.price;
     setCartTotal(prevState => prevState + parseInt(price))
     setMessage(`${art.title} added to your cart!`)
+    handleCartClick();
     } else {
       setMessage('You already have this item in your cart!')
+      handleCartClick();
     }
   }
 
@@ -55,7 +57,6 @@ function ArtController() {
   const handleCartClick = () => {
     setCartVisible(true);
     setHomeVisible(false);
-    setMessage('');
   }
 
   const handleHomeClick = () => {
@@ -65,7 +66,9 @@ function ArtController() {
   }
   let currentlyVisible = null;
   if (cartVisible) {
-    currentlyVisible = <Cart 
+    currentlyVisible = 
+    <Cart 
+      exit={handleHomeClick}
       cartItems={cart}
       total={cartTotal} 
       delete={handleDeleteFromCart} />;
@@ -78,7 +81,7 @@ function ArtController() {
   }
   return (
     <div>
-      <Header mainView={handleHomeClick} cartView={handleCartClick} />
+      <Header mainView={handleHomeClick}/>
       <p>{message}</p>
       {currentlyVisible}
     </div>
