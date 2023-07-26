@@ -5,6 +5,7 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <div className="background-circle"></div>
     <App />
   </React.StrictMode>,
 )
