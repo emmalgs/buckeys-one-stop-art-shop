@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { SaleObj } from "../admin/AdminControl";
 
 interface TimerProps {
   timer: number;
+  selection: SaleObj;
+  buyArt: (art: SaleObj) => void;
 }
 
 function Timer(props: TimerProps) {
@@ -38,7 +41,7 @@ function Timer(props: TimerProps) {
           <span>SEC</span>
         </div>
       </div>
-      <button className="buy">BUY</button>
+      <button className="buy" onClick={() => props.buyArt(props.selection)}>BUY</button>
     </div>
   );
 }
