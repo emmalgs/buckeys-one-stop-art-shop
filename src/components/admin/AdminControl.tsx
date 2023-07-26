@@ -222,8 +222,7 @@ function AdminControl() {
       <div className='admin-body'>
         <AdminHeader 
           loginClick={handleLoginViewClick} 
-          logoutViewClick={handleLogoutViewClick} 
-          viewAllArtClick={handleViewAllArtClick} />
+          logoutViewClick={handleLogoutViewClick} />
         {currentView}
       </div>
     )
@@ -247,7 +246,8 @@ function AdminControl() {
       currentView = 
         <SellArtForm 
           selection={selectedArt} 
-          sellArt={handleSubmitArtSale} />
+          sellArt={handleSubmitArtSale}
+          back={handleViewAllArtClick} />
     } else if (selectedArt != null) {
       currentView = 
         <ArtDetails 
@@ -269,8 +269,7 @@ function AdminControl() {
       <div className='admin-body'>
         <AdminHeader 
           loginClick={handleLoginViewClick}
-          logoutViewClick={handleLogoutViewClick}
-          viewAllArtClick={handleViewAllArtClick} />
+          logoutViewClick={handleLogoutViewClick} />
         {currentView}
       </div>
     )

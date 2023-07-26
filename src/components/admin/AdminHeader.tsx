@@ -18,7 +18,6 @@ function AdminHeader(props: HeaderProps) {
     <div className="header admin-nav">
       <h1>Buckey's Backend</h1>
       {currentLoginOrOutBtn}
-      <button onClick={props.viewAllArtClick}>View All Art</button>
     </div>
   )
 }
