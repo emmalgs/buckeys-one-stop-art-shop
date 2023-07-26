@@ -31,12 +31,16 @@ function ArtQueueForm(props: FormProps) {
         title: { value: string };
         description: { value: string };
         price: { value: string };
+        quantity: {value: string};
+        available: {value: string};
       };
 
       const art = {
         title: target.title.value,
         description: target.description.value,
         price: target.price.value,
+        quantity: target.quantity.value,
+        available: target.available.value,
         imageUrl: imageURL,
         id: v4(),
       };
@@ -46,18 +50,35 @@ function ArtQueueForm(props: FormProps) {
 
   return (
     <div className="add-art-form">
-      <div className="exit" onClick={props.back}>x</div>
+      <div className="exit" onClick={props.back}>
+        x
+      </div>
       <form onSubmit={submitArt}>
         <label htmlFor="name">Title </label>
         <input type="text" name="title" placeholder="title" id="name" />
         <label htmlFor="description">Description </label>
-        <input type="text"
+        <input
+          type="text"
           name="description"
           placeholder="description of art piece"
           id="description"
         />
         <label htmlFor="price">Price</label>
         <input type="number" name="price" placeholder="price" id="price" />
+        <label htmlFor="quantity">Quantity</label>
+        <input
+          type="number"
+          name="quantity"
+          id="quantity"
+          placeholder="quantity"
+        />
+        <div className="drop-down">
+          <label htmlFor="available">Available</label>
+          <select name="available" id="available">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
         <label htmlFor="file">Upload Image: </label>
         <input
           type="file"
