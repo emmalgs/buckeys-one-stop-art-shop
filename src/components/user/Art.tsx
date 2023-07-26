@@ -1,18 +1,19 @@
 import ArtInfo from "./ArtInfo";
 import ArtImage from "./ArtImage";
 import Timer from "./Timer";
+import { SaleObj } from "../admin/AdminControl";
 
 interface ArtProps {
-  art: object
+  art: SaleObj
+  countdown: number
 }
 
 function Art(props: ArtProps) {
-  const art = props.art
   return (
     <div className="art">
-      <ArtInfo title={art.title} description={art.description} price={art.price} />
-      <ArtImage image={art.imageUrl}/>
-      <Timer />
+      <ArtInfo title={props.art.title} description={props.art.description} price={props.art.price} />
+      <ArtImage image={props.art.imageUrl}/>
+      <Timer timer={props.countdown}/>
     </div>
   )
 }

@@ -1,14 +1,46 @@
-function Timer() {
+import { useState } from "react";
+
+interface TimerProps {
+  timer: number;
+}
+
+function Timer(props: TimerProps) {
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+
+  setInterval(() => {
+    const now = new Date().getTime();
+    const distance = props.timer - now;
+    setDays(Math.floor(distance / (1000 * 60 * 60 * 24)));
+    setHours(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+    setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+    setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
+  }, 1000);
   return (
     <div className="timer-container">
       <div className="timer">
-        <div className="time"><h2>12 :</h2><p>HR</p></div>
-        <div className="time"><h2>24 :</h2> <p>MIN</p></div>
-        <div className="time"><h2> 05</h2> <p>SEC</p></div>
+        <div className="time">
+          <h2>{days}</h2>
+          <span>DAYS</span>
+        </div>
+        <div className="time">
+          <h2>{hours}</h2>
+          <span>HR</span>
+        </div>
+        <div className="time">
+          <h2>{minutes}</h2> 
+          <span>MIN</span>
+        </div>
+        <div className="time">
+          <h2>{seconds}</h2> 
+          <span>SEC</span>
+        </div>
       </div>
-        <button className="buy">BUY</button>
+      <button className="buy">BUY</button>
     </div>
-  )
+  );
 }
 
 export default Timer;
