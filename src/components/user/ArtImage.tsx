@@ -4,10 +4,12 @@ interface ImageProps {
 
 function ArtImage(props: ImageProps) {
   return (
-    <div className='art-image'>
-      <img src={props.image} alt='artwork' />
+    <div className="image-container">
+      <div className="art-image">
+        <img src={props.image} alt="artwork" />
+      </div>
     </div>
-  )
+  );
 }
 
 export default ArtImage;

@@ -90,9 +90,10 @@ function ArtController() {
         buyClick={handleAddToCart} />;
   }
   return (
-    <div>
+    <div className="user-main">
       <Header mainView={handleHomeClick}/>
-      <p>{message}</p>
+      <div className="side-line"></div>
+      <p className="message">{message}</p>
       {currentlyVisible}
     </div>
   );
