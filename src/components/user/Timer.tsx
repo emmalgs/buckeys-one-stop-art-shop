@@ -28,14 +28,17 @@ function Timer(props: TimerProps) {
           <h2>{days}</h2>
           <span>DAYS</span>
         </div>
+        <div className="colon">:</div>
         <div className="time">
           <h2>{hours}</h2>
           <span>HR</span>
         </div>
+        <div className="colon">:</div>
         <div className="time">
           <h2>{minutes}</h2> 
           <span>MIN</span>
         </div>
+        <div className="colon">:</div>
         <div className="time">
           <h2>{seconds}</h2> 
           <span>SEC</span>
