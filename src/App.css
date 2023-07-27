@@ -75,8 +75,8 @@ body {
 .header img {
   width: 12em;
   margin-top: 10px;
-  opacity: 50%;
-  
+  opacity: 1;
+  animation: fadeinout 3s linear infinite;
 }
 .side-line {
   grid-area: 1 / 1 / 16 / 2;
@@ -559,4 +559,9 @@ img {
   100% {
     transform: translateX(-10%);
   }
+}
+
+@keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
 }
