@@ -7,7 +7,7 @@
   --gold: #DFAF00;
   --green: #248232;
   --light: #EDE7E3;
-  --main-font: 'Unbounded', Helvetica, sans-serif;
+  --main-font: 'Inconsolata', Helvetica, sans-serif;
 }
 
 body {
@@ -46,7 +46,7 @@ body {
 }
 
 .header h1 {
-  font-family: "Oi";
+  font-family: "Shrikhand";
   width: 400px;
   font-size: 30px;
   text-align: center;
@@ -58,6 +58,7 @@ body {
 }
 
 .header img {
+  position: fixed;
   width: 12em;
   margin-top: 10px;
 }
@@ -433,6 +434,11 @@ td {
   padding: 2em;
 }
 
+.edit-art {
+  grid-area: 2 / 3 / 11 / 5;
+  margin-bottom: 2em;
+}
+
 .exit {
   text-align: right;
   cursor: pointer;
@@ -479,14 +485,25 @@ td {
 /* ADMIN ART TO SELL FORM */
 
 .sell-art-form {
-  grid-area: 2 / 2 / 11 / 6;
+  grid-area: 2 / 2 / 9 / 6;
 
   background-color: var(--blue);
   padding: 2em;
   margin: 0 5em 0 5em;
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.selected-art {
+  grid-area: 1 / 1 / 6 / 4;
+  height: 500px;
+}
+
+.date-select {
+  grid-area: 2 / 4 / 7 / 7;
+  padding: 2em;
+
 }
 
 .date-select form {
@@ -495,8 +512,19 @@ td {
   gap: 1em;
 }
 
+.exit-sell {
+  cursor: pointer;
+  grid-area: 1 / 6 / 2 / 7;
+  padding: 0;
+  margin: 0;
+  text-align: right;
+  font-size: 2em;
+  font-weight: 700;
+}
 .date-select form input {
   line-height: 2em;
+  width: 200px;
+  margin: auto;
 }
 
 .date-select form button {

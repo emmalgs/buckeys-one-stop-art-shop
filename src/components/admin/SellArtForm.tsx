@@ -19,7 +19,7 @@ function SellArtForm(props: SellArtProps) {
   };
   return (
     <div className="sell-art-form">
-      <p onClick={props.back}>x</p>
+      <p onClick={props.back} className="exit-sell">x</p>
       <div className="selected-art">
         <h2>Selected Art To Sell:</h2>
         <div className="art-details">
