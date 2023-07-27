@@ -1,10 +1,9 @@
 import { ArtObj } from "./AdminControl";
-import { SaleObj } from "./AdminControl";
 import { useState } from "react";
 
 interface ArtProps {
   allArt: Array<ArtObj>;
-  forSale: SaleObj;
+  forSale: ArtObj;
   countdown: number;
   onArtClick: (id: string) => void;
   onAddArtClick: () => void;
