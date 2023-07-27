@@ -57,10 +57,16 @@ body {
   color: var(--blue);
 }
 
-.header img {
+.header-img {
   position: fixed;
+  width: 100%;
+  animation: move 10s linear infinite;
+}
+
+.header img {
   width: 12em;
   margin-top: 10px;
+  
 }
 .side-line {
   grid-area: 1 / 1 / 16 / 2;
@@ -206,13 +212,14 @@ button.checkout:hover {
 
 /* USER CART */
 .cart-main {
-  grid-area: 4 / 2 / 16 / 15;
+  grid-area: 4 / 3 / 14 / 13;
 
   display: grid;
-  grid-template-columns: repeat(10, 8vw);
-  grid-template-rows: repeat(10, 8vh);
+  grid-template-columns: repeat(10, 7vw);
+  grid-template-rows: repeat(10, 5vh);
   border-top: 1px solid var(--blue);
   border-right: 1px solid var(--blue);
+  padding-top: 1em;
 }
 
 .message {
@@ -533,4 +540,13 @@ td {
 
 img {
   width: 12em;
+}
+
+@keyframes move{
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-10%);
+  }
 }

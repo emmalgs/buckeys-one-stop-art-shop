@@ -7,7 +7,7 @@ function Header(props: HeaderProps) {
   return(
     <div className="header">
       <h1 onClick={props.mainView}>Buckey's One Stop Art Shop</h1>
-      <img src={buckey} />
+      <div className="header-img"><img src={buckey} /></div>
     </div>
   )
 }
