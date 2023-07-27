@@ -11,6 +11,9 @@ function ArtInfo(props: ArtInfo) {
         <h2>{props.title}</h2>
       </div>
       <div className="description">
+        <div className="description-header">
+          <h2>About The Art</h2>
+        </div>
         <p>{props.description}</p>
       </div>
       <div className="price">

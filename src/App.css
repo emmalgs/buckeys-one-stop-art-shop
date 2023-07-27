@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Caprasimo&family=Oi&family=Shrikhand&family=Ultra&family=Unbounded:wght@200;400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Caprasimo&family=Inconsolata:wght@300;400;700&family=Oi&family=Shrikhand&family=Ultra&family=Unbounded:wght@200;400;800&display=swap');
 
 :root {
   --blue: #266DD3;
@@ -12,7 +12,7 @@
 
 body {
   color: var(--black);
-  font-family: Helvetica, sans-serif;
+  font-family: 'Inconsolata', Helvetica, sans-serif;
 }
 
 /* .background-circle {
@@ -78,20 +78,34 @@ body {
 
 .art-info {
   grid-area: 2 / 1 / 7 / 4;
+  z-index: 2;
 }
 
-.art-info .title {
+.art-info .title,
+.art-info .description-header {
   border-bottom: 1px solid var(--black);
   margin-left: -10px;
   margin-right: 90px;
-  padding-bottom: -10px;
-  height: 1.6em;
+
+  height: 2.5em;
   text-transform: uppercase;
 }
 
-.art-info .title h2 {
+.art-info .description-header {
+  margin-top: 40px;
+}
+
+.art-info .title h2,
+.art-info .description h2 {
   margin: 0;
-  padding-left: 1em;
+  padding-left: 0.5em;
+  font-size: 2.3em;
+  font-weight: 700;
+}
+
+.art-info .description h2 {
+  font-weight: 300;
+  width: 300px;
 }
 
 .image-container {
