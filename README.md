@@ -30,7 +30,7 @@ Buckey's One Stop Art Shop is an e-commerce website that puts one piece of art u
 
 The admin page allows the owners to upload art and images of the art using Firebase Realtime Database, Firebase Storage, and Firebase Authentication to log in. The artist has full CRUD capabilities with the art and the dashboard currently displays the art that's up for sale and a list of all art available in the database.
 
-7/27/23 -- Currently the project is not connected to a payment API. Further features will include a checkout options for users, and the admin dashboard will include further information if the art is available or sold an quantity.
+7/27/23 -- Currently the project is not connected to a payment API. Further features will include a message to display when the time runs out or the piece has sold, checkout options for users, and the admin dashboard will include further information if the art is available or sold an quantity.
 
 ## Technologies Used
 
