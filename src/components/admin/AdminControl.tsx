@@ -53,8 +53,10 @@ function AdminControl() {
         const artOnSale = artworks.filter((art) => art.forSale === true);
         setForSale(artOnSale[0]);
         const dateData = artOnSale[0].closeDate;
-        const jsDate = new Date(dateData);
-        setCountDownDate(jsDate.getTime());
+        if (dateData) {
+          const jsDate = new Date(dateData);
+          setCountDownDate(jsDate.getTime());
+        }
       },
       (error) => {
         setSuccessMessage(error.message);
@@ -234,6 +236,7 @@ function AdminControl() {
     if (logoutView) {
       currentView = <AdminLogout />;
     } else if (editing) {
+      
       currentView = (
         <EditArtForm
           artwork={selectedArt}
