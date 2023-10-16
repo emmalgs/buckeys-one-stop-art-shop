@@ -3,7 +3,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
 
 interface FormProps {
-  updateArt: (artwork: ArtObj) => void;
+  updateArt: (artwork: ArtObj | null) => void;
   backToArt: (id: string) => void;
   artwork: ArtObj;
 }
@@ -52,11 +52,14 @@ function EditArtForm(props: FormProps) {
       price: target.price.value,
       quantity: target.quantity.value,
       available: target.available.value,
-      imageUrl: imageURL,
+      imageUrl: imageURL || "",
       id: props.artwork.id,
     };
 
-    props.updateArt(art);
+    props.updateArt({
+      ...art,
+      imageUrl: art.imageUrl || "",
+    });
   };
 
   const removeImage = () => {
@@ -121,7 +124,9 @@ function EditArtForm(props: FormProps) {
               onChange={handleImageChange}
               id="file"
             />
-            <img src={imageURL} />
+            <img src={imageURL ?? ''} />
+
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             <p onClick={addImageToStorage}>Add Image</p>
           </>
         )}
